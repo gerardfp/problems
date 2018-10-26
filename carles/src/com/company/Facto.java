@@ -1,4 +1,4 @@
-package com.company.Opos2018;
+package com.company;
 
 import java.math.BigInteger;
 import java.util.HashMap;
