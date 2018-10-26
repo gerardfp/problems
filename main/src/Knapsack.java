@@ -20,7 +20,7 @@ public class Knapsack {
         return K[W];
     }
 
-    static int knapSack01(int val[], int wt[], int W) {
+    static int knapSack01(int[] val, int[] wt, int W) {
         int[][] K = new int[val.length+1][W+1];
 
         for (int i = 1; i < K.length; i++) {
