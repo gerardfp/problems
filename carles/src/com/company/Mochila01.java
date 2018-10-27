@@ -1,18 +1,19 @@
 package com.company;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Mochila01 {
   private final int W;
   private final int[] weight;
   private final int[] value;
-  private final HashMap<String, String> seleccionats;
+  private final int[][][] seleccionats;
 
   public Mochila01(int[] value, int[] weight, int W) {
     this.value = value;
     this.weight = weight;
     this.W = W;
-    this.seleccionats = new HashMap<String, String>();
+    this.seleccionats = new int[W + 1][value.length + 1][2];
   }
 
   public static void main(String[] args) {
@@ -33,7 +34,7 @@ public class Mochila01 {
 
         int agafo = Integer.MIN_VALUE;
         if (weight[j - 1] <= i) {
-          agafo = value[j - 1] + val[i - weight[j-1]][j - 1];
+          agafo = value[j - 1] + val[i - weight[j - 1]][j - 1];
         }
 
         int noAgafo = val[i][j - 1];
@@ -42,35 +43,33 @@ public class Mochila01 {
         String seleccionat;
         if (agafo > noAgafo) {
           max = agafo;
-          seleccionat = String.format("(%d,%d)", i - weight[j-1], j - 1);
+          seleccionats[i][j][0] = i - weight[j - 1];
+          seleccionats[i][j][1] = j - 1;
         } else {
           max = noAgafo;
-          seleccionat = String.format("(%d,%d)", i, j - 1);
+          seleccionats[i][j][0] = i;
+          seleccionats[i][j][1] = j - 1;
         }
 
         val[i][j] = max;
-        String key = String.format("(%d,%d)", i, j);
-        seleccionats.put(key, seleccionat);
       }
     }
     return val[W][value.length];
   }
 
   void seleccionats() {
-    String key = String.format("(%d,%d)", W, value.length);
-    while (seleccionats.get(key) != null) {
-      String select = seleccionats.get(key);
-      String[] split = select
-              .replace("(", "")
-              .replace(")", "")
-              .split(",");
+    int i = W;
+    int j = value.length;
 
-      int i = Integer.parseInt(split[0]);
-      int j = Integer.parseInt(split[1]);
+    while (i != 0 && j != 0) {
+      int aux_i = seleccionats[i][j][0];
+      int aux_j = seleccionats[i][j][1];
 
-      System.out.println("Agafem el item " + j + ", de valor " + value[j]);
+      i = aux_i;
+      j= aux_j;
 
-      key = select;
+      System.out.println("Agafem l'item " + j + " amb valor " + value[j]);
     }
+
   }
 }
