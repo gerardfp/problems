@@ -42,7 +42,6 @@ public class Knapsack {
                     maxvalue = Math.max(maxvalue, val[i - 1] * n + K[i - 1][w - wt[i - 1] * n]);
                 }
                 K[i][w] = maxvalue;
-                printMatrix(K);
             }
         }
 
