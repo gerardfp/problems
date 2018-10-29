@@ -14,7 +14,7 @@ public class Knapsack {
             K[i] = maxvalue;
         }
 
-        return K[K.length-1];
+        return K[weight];
     }
 
     static int zeroone(int[] val, int[] wt, int W) {
@@ -29,7 +29,7 @@ public class Knapsack {
             }
         }
 
-        return K[K.length-1][W];
+        return K[val.length][W];
     }
 
     static int bounded(int[] val, int[] wt, int[] qt, int W) {
@@ -45,7 +45,7 @@ public class Knapsack {
             }
         }
 
-        return K[K.length-1][W];
+        return K[val.length][W];
     }
 
     public static void main(String[] args) {

@@ -1,17 +1,15 @@
-import java.util.Arrays;
-
 public class RodCutting{
     static int cutRod(int[] prices, int size){
-        int[] maxs = new int[size+1];
+        int[] K = new int[size+1];
 
-        for (int i = 1; i < maxs.length; i++) {
+        for (int i = 1; i <= size; i++) {
             int max = Integer.MIN_VALUE;
             for (int j = 0; j < i && j < prices.length; j++) {
-                max = Math.max(max, prices[j] + maxs[i-j-1]);
+                max = Math.max(max, prices[j] + K[i-j-1]);
             }
-            maxs[i] = max;
+            K[i] = max;
         }
-        return maxs[maxs.length-1];
+        return K[size];
     }
 
     public static void main(String[] args) {
