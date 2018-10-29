@@ -32,13 +32,31 @@ public class Knapsack {
         return K[K.length-1][W];
     }
 
+    static int bounded(int[] val, int[] wt, int[] qt, int W) {
+        int[][] K = new int[val.length+1][W+1];
+
+        for (int i = 1; i <= val.length; i++) {
+            for (int w = 1; w <= W; w++) {
+                int maxvalue = K[i-1][w];
+                for (int n = 0; n <= qt[i-1] && wt[i-1]*n <= w; n++) {
+                    maxvalue = Math.max(maxvalue, val[i - 1] * n + K[i - 1][w - wt[i - 1] * n]);
+                }
+                K[i][w] = maxvalue;
+                printMatrix(K);
+            }
+        }
+
+        return K[K.length-1][W];
+    }
+
     public static void main(String[] args) {
-	    int[] number = {4,7,3};
-	    int[] values = {3, 6, 7};
-	    int[] weights = {1,3,4};
+	    int[] quantity = {3, 1, 1, 2};
+	    int[] values = {2, 5, 6, 7};
+	    int[] weights = {1, 3, 4, 5};
 
         System.out.println(unbounded(values, weights, 4));
         System.out.println(zeroone(values, weights, 4));
+        System.out.println(bounded(values, weights, quantity, 6));
     }
 
     static void printMatrix(int[][] m){
