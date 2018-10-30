@@ -40,7 +40,6 @@ public class Mochila01 {
         int noAgafo = val[i][j - 1];
 
         int max = 0;
-        String seleccionat;
         if (agafo > noAgafo) {
           max = agafo;
           seleccionats[i][j][0] = i - weight[j - 1];
