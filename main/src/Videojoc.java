@@ -5,7 +5,7 @@ public class Videojoc {
 
         for (int i = 1; i <= v; i++) {
             int min = Integer.MAX_VALUE;
-            for (int j = 0; j < p.length && i >= p[j]; j++) {
+            for (int j = 0; j < p.length && p[j] <= i; j++) {
                 min = Math.min(min, K[i-p[j]]+1);
             }
             K[i] = min;
