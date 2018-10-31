@@ -13,8 +13,8 @@ public class Util {
     static void printArray(int[] a){
         for (int i = 0; i < a.length; i++) {
             System.out.printf("%3d", a[i]);
-
         }
+        System.out.println();
         System.out.println("----");
     }
 }
