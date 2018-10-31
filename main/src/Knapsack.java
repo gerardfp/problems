@@ -39,7 +39,7 @@ public class Knapsack {
             for (int w = 1; w <= W; w++) {
                 int maxvalue = K[i-1][w];
                 for (int n = 0; n <= qt[i-1] && wt[i-1]*n <= w; n++) {
-                    maxvalue = Math.max(maxvalue, val[i - 1] * n + K[i - 1][w - wt[i - 1] * n]);
+                    maxvalue = Math.max(maxvalue, val[i-1] * n + K[i-1][w - wt[i-1] * n]);
                 }
                 K[i][w] = maxvalue;
             }
