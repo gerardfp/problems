@@ -1,4 +1,8 @@
 public class RodCutting{
+    /*
+    * https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
+    */
+
     static int cutRod(int[] prices, int size){
         int[] K = new int[size+1];
 
