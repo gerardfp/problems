@@ -9,7 +9,7 @@ public class Change {
 
     Change change = new Change();
     System.out.println(change.minChange(tipus, 4));
-    System.out.println(change.numChanges(tipus, 4));
+    System.out.println(change.numChanges(tipus2, 10));
   }
 
   private int minChange(int[] tipus, int n) {
@@ -22,8 +22,8 @@ public class Change {
 
     for (int i = 1; i <= n; i++) {
       for (int j = 1; j <= tipus.length; j++) {
-        Double entra = Double.POSITIVE_INFINITY;
-        Double noEntra = val[i][j - 1];
+        double entra = Double.POSITIVE_INFINITY;
+        double noEntra = val[i][j - 1];
 
         if (i >= tipus[j - 1]) {
           entra = 1 + val[i - tipus[j - 1]][j];
@@ -47,8 +47,8 @@ public class Change {
 
     for (int i = 1; i <= n; i++) {
       for (int j = 1; j <= tipus.length; j++) {
-        Double noAgafem = val[i][j - 1];
-        Double agafem = Double.NEGATIVE_INFINITY;
+        double noAgafem = val[i][j - 1];
+        double agafem = Double.NEGATIVE_INFINITY;
         if (i >= tipus[j - 1]) {
           agafem = 1 + val[i - tipus[j - 1]][j];
         }
