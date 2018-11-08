@@ -47,12 +47,30 @@ public class BuildingBridges {
     }
 
     public static void main(String[] args) {
-        int[] north = {8,8,9,1,2,2,2,3,1,3,3,4};
+        int[] north = {8,8,9,1,2,2,2,3};
         int[] south = {1,2,3,4,5,6,7,8};
 
         //TODO: Ordenar els ponts segons "south"
 
         System.out.println(maxBridges(north));
         System.out.println(maxBridges2(north));
+    }
+
+    static class CityPairs implements Comparable<CityPairs> {
+        int north, south;
+        CityPairs(int a, int b){
+            north = a;
+            south = b;
+        }
+
+        @Override
+        public int compareTo(CityPairs o) {
+            return Integer.compare(south, o.south);
+        }
+
+        @Override
+        public String toString() {
+            return "(" + north + ", " + south + ")";
+        }
     }
 }

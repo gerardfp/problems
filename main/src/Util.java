@@ -39,10 +39,21 @@ public class Util {
             }else if(a[i] == Integer.MAX_VALUE){
                 System.out.printf("  +");
             }else {
-                System.out.printf("%3d", a[i]);
+                System.out.printf("%" + (maxDigits(a)+1) + "d", a[i]);
             }
         }
         System.out.println();
         System.out.println("----");
+    }
+
+    static int maxDigits(int[] a){
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < a.length; i++) {
+            max = Math.max(max, a[i]);
+            min = Math.min(min, a[i]);
+        }
+
+        return Math.max(String.valueOf(max).length(), String.valueOf(min).length());
     }
 }

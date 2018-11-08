@@ -47,3 +47,11 @@ public class AsignacionRecursos {
         System.out.println(maxBeneficio(v, lm, li, 6));
     }
 }
+
+/*
+Disponemos de R unidades de un recurso y deseamos asignar cierta cantidad del mismo a cada una de D actividades distintas.
+Una función v: NxN->R nos indica el beneficio que obtenemos al asignar r unidades del recurso a la actividad d con v(d,r).
+Las unidades del recurso que se asignan a una actividad d debe ser inferior o igual a lm[d], y superior o igual a li[d].
+Tenemos la obliagción de consumir totad las unidades disponibles del recurso R.
+Deseamos obtener la asignacion de recursos a actividades que maximiza el beneficio total obtenido.
+ */
