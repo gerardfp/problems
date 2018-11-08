@@ -6,84 +6,57 @@ import java.util.HashMap;
 
 public class Riu {
 
-  private final float[][] posicions;
-  private final ArrayDeque<Integer> visitats;
-  final HashMap<Integer, Integer> visitatsHash;
+  private final int[][] posicions;
 
-  public Riu(float[][] posicions) {
+  public Riu(int[][] posicions) {
     this.posicions = posicions;
-    this.visitats = new ArrayDeque<>();
-    this.visitatsHash = new HashMap<>();
   }
 
 
   public static void main(String[] args) {
-    float[][] posicions = new float[200][200];
-
-    for (int i = 0; i < posicions.length; i++) {
-      for (int j = 0; j < posicions[i].length; j++) {
-        posicions[i][j] = ((float) Math.random() * 200) + 1;
-      }
-    }
+    int inf = Integer.MAX_VALUE;
+    int[][] posicions = {
+            {inf, 5, 8, 13},
+            {inf, inf, 4, 5},
+            {inf, inf, inf, 3},
+            {inf, inf, inf, inf}
+    };
 
     Riu riu = new Riu(posicions);
     System.out.println(riu.minCost());
-    System.out.println(riu.ruta());
   }
 
-  private float minCost() {
-    HashMap<Integer, Float> cache = new HashMap<>();
-    return minCost(0, posicions.length - 1, cache);
-  }
+  private int minCost() {
+    int[][] val = new int[posicions.length + 1][posicions.length + 1];
 
-  private String ruta() {
-    String out = "";
-
-    int ini = 0;
-
-    while (ini != posicions.length - 1 ) {
-      out += ini;
-
-      int aux = visitatsHash.get(ini);
-      if(aux != posicions.length - 1) {
-        out += " -> ";
-      }
-      ini = aux;
+    for (int i = 0; i <= posicions.length; i++) {
+      val[i][0] = Integer.MAX_VALUE;
     }
 
-    out += " -> " + (posicions.length - 1);
+    for (int i = 2; i <= posicions.length; i++) {
+      for (int j = 1; j <= posicions.length; j++) {
 
-    return out;
+        int noEntra = val[i][j - 1];
+        int entra = posicions[j - 1][i - 1] + val[j][posicions.length];
+
+
+        val[i][j] = Math.min(entra, noEntra);
+
+        printMatrix(val);
+      }
+    }
+    return val[posicions.length][posicions.length];
   }
 
-  private float minCost(int ini, int fi, HashMap<Integer, Float> cache) {
-    if (ini == fi) {
-      return 0;
-    } else {
-      Integer key = ini;
-      if (!cache.containsKey(key)) {
-        float min = Float.MAX_VALUE;
-
-        for (int i = 0; i < posicions.length; i++) {
-
-          if (!visitats.contains(i)) {
-            this.visitats.push(i);
-
-            float costAct = posicions[ini][i];
-            float cost = costAct + minCost(i, fi, cache);
-
-            this.visitats.pop();
-
-            if (cost < min) {
-              min = cost;
-              visitatsHash.put(ini, i);
-            }
-          }
-        }
-
-        cache.put(key, min);
+  private void printMatrix(int[][] matrix) {
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[i].length; j++) {
+        System.out.print(" " + matrix[j][i]);
       }
-      return cache.get(key);
+      System.out.println();
     }
+    System.out.println("---");
+
   }
 }
+
