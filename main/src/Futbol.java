@@ -3,20 +3,47 @@ public class Futbol {
     // TODO: path
 
     public static void main(String[] args) {
-        double[][] P = new double[12][12];
-        P[0][1] = 0.9;
-        P[0][2] = 0.7;
-        P[1][2] = 0.6;
-        P[1][4] = 0.1;
-        P[2][3] = 0.5;
-        P[2][5] = 0.1;
-        P[2][11] = 0.2;
-        P[3][0] = 0.9;
+//        double[][] P = new double[12][12];
+//        P[0][1] = 0.9;
+//        P[0][2] = 0.7;
+//        P[1][2] = 0.6;
+//        P[1][4] = 0.1;
+//        P[2][3] = 0.5;
+//        P[2][5] = 0.1;
+//        P[2][11] = 0.2;
+//        P[3][0] = 0.9;
+//        P[3][2] = 1;
+//        P[3][5] = 0.8;
+//        P[4][11] = 0.7;
+//        P[5][4] = 0.3;
+//        P[5][11] = 0.6;
+
+
+        double[][] P = new double[5][5];
+        P[0][3] = 1;
+        P[1][4] = 1;
+        P[2][1] = 1;
         P[3][2] = 1;
-        P[3][5] = 0.8;
-        P[4][11] = 0.7;
-        P[5][4] = 0.3;
-        P[5][11] = 0.6;
+
+
+
+
+
+        double[][] P = {
+                { 0,  0,  0,  1,  0},
+                { 0,  0,  0,  0,  1},
+                { 0,  1,  0,  0,  0},
+                { 0,  0,  1,  0,  0},
+                {0,0,0,0,0}
+        };
+
+//        double[][] P = {
+//                { 0,  0,  0,  1,  0},
+//                { 0,  0,  1,  0,  1},
+//                { 0,  0,  0,  0,  1},
+//                { 0,  1,  0,  0,  0},
+//                {0,0,0,0,0}
+//        };
 
 //        double[][] P = {
 //                { 0, .9, .1, .0, .0},
@@ -24,6 +51,14 @@ public class Futbol {
 //                {.1, .0,  0, .9, .1},
 //                {.0, .0, .0,  0, .9},
 //                {0,0,0,0,0}
+//        };
+
+//        double[][] P = {
+//                { 1, .5, .4, .0, .0},
+//                {.0,  1, .5, .1, .1},
+//                {.4,  0,  1, .9, .5},
+//                {.0, .0, .0,  1, .1},
+//                {0,0,0,0,1}
 //        };
 
         for (int i = 0; i < P.length; i++) {
@@ -37,16 +72,16 @@ public class Futbol {
 
     static double optima(double[][] P){
         double[][] K = new double[P.length+1][P.length+1];
-        K[0][0] = 1;
-        K[0][1] = 1;
-        for (int i = 0; i < P.length; i++) {
-            K[i][0] = 1;
+        for (int i = 0; i <= P.length; i++) {
+            K[i][0] = 0;
         }
+
+        K[0][1] = 1;  // la jugada se inicia en el portero (desde fora del camp, soloes se pot pasar al portero)
 
         for (int i = 1; i < P.length+1; i++) {
             for (int j = 1; j < P.length+1; j++) {
                 double max = Double.NEGATIVE_INFINITY;
-                for (int k = 0; k < P.length; k++) {
+                for (int k = 0; k < i; k++) {
                     double prob = K[i-1][k+1] * P[k][j-1];
                     if (prob > max) {
                         max = prob;
