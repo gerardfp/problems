@@ -3,39 +3,35 @@ public class Futbol {
     // TODO: path
 
     public static void main(String[] args) {
-//        double[][] P = new double[12][12];
-//        P[0][1] = 0.9;
-//        P[0][2] = 0.7;
-//        P[1][2] = 0.6;
-//        P[1][4] = 0.1;
-//        P[2][3] = 0.5;
-//        P[2][5] = 0.1;
-//        P[2][11] = 0.2;
-//        P[3][0] = 0.9;
-//        P[3][2] = 1;
-//        P[3][5] = 0.8;
-//        P[4][11] = 0.7;
-//        P[5][4] = 0.3;
-//        P[5][11] = 0.6;
-
-
-        double[][] P = new double[5][5];
-        P[0][3] = 1;
-        P[1][4] = 1;
-        P[2][1] = 1;
+        double[][] P = new double[12][12];
+        P[0][1] = 0.9;
+        P[0][2] = 0.7;
+        P[1][2] = 0.6;
+        P[1][4] = 0.1;
+        P[2][3] = 0.5;
+        P[2][5] = 0.1;
+        P[2][11] = 0.2;
+        P[3][0] = 0.9;
         P[3][2] = 1;
+        P[3][5] = 0.8;
+        P[4][11] = 0.7;
+        P[5][4] = 0.3;
+        P[5][11] = 0.6;
 
 
+//        double[][] P = new double[5][5];
+//        P[0][3] = 1;
+//        P[1][4] = 1;
+//        P[2][1] = 1;
+//        P[3][2] = .1;
 
-
-
-        double[][] P = {
-                { 0,  0,  0,  1,  0},
-                { 0,  0,  0,  0,  1},
-                { 0,  1,  0,  0,  0},
-                { 0,  0,  1,  0,  0},
-                {0,0,0,0,0}
-        };
+//        double[][] P = {
+//                { 0,  0,  0,  1,  0},
+//                { 0,  0,  0,  0,  1},
+//                { 0,  1,  0,  0,  0},
+//                { 0,  0,  1,  0,  0},
+//                {0,0,0,0,0}
+//        };
 
 //        double[][] P = {
 //                { 0,  0,  0,  1,  0},
@@ -67,7 +63,8 @@ public class Futbol {
             }
 
         }
-        System.out.println(optima(P));
+        //System.out.println(optima(P));
+        System.out.println(floydWarshall(P));
     }
 
     static double optima(double[][] P){
@@ -95,6 +92,25 @@ public class Futbol {
     }
 
 
+    static double floydWarshall(double graph[][]) {
+        double dist[][] = new double[graph.length][graph.length];
+        int i, j, k;
+
+        for (i = 0; i < graph.length; i++)
+            for (j = 0; j < graph.length; j++)
+                dist[i][j] = graph[i][j];
+
+        for (k = 0; k < graph.length; k++) {
+            for (i = 0; i < graph.length; i++) {
+                for (j = 0; j < graph.length; j++) {
+                    if (dist[i][k] * dist[k][j] > dist[i][j])
+                        dist[i][j] = dist[i][k] * dist[k][j];
+                }
+            }
+        }
+
+        return dist[0][graph.length-1];
+    }
 }
 
 /*
