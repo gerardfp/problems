@@ -61,8 +61,8 @@ public class Futbol {
     P[2][1] = 1;
     P[3][2] = 1;
 
-    graf.bellmanFord(P);
-
+    //graf.bellmanFord(P);
+    System.out.println(graf.bellmanFordProb(distancies));
   }
 
   private double maximitzaIter() {
@@ -106,24 +106,26 @@ public class Futbol {
     ArrayDeque<Integer> pendents = new ArrayDeque<>();
     ArrayDeque<Integer> visitats = new ArrayDeque<>();
 
-    pendents.push(1);
+    pendents.add(1);
 
-    for (int j = 2; j < p.length; j++) {
+    for (int j = 2; j <= p.length; j++) {
       val[j] = Double.POSITIVE_INFINITY;
     }
 
-    while(!pendents.isEmpty()){
-      int act = pendents.pop();
+    while (!pendents.isEmpty()) {
+      int act = pendents.getFirst();
       visitats.push(act);
 
-      for (int i = 2; i <= p[act-1].length; i++) {
+      System.out.println(act);
+
+      for (int i = 2; i <= p[act - 1].length; i++) {
         double noAgafa = val[i];
         double agafa = Double.POSITIVE_INFINITY;
 
-        if(p[act-1][i-1] != 0){
-          agafa = p[act-1][i-1] + val[act];
-          if(!visitats.contains(i)){
-            pendents.push(i);
+        if (p[act - 1][i - 1] != 0) {
+          agafa = p[act - 1][i - 1] + val[act];
+          if (!visitats.contains(i)) {
+            pendents.addLast(i);
           }
         }
         val[i] = Math.min(noAgafa, agafa);
@@ -133,6 +135,59 @@ public class Futbol {
     }
     return val[p.length];
   }
+
+  private double bellmanFordProb(double[][] p) {
+    double[] val = new double[p.length + 1];
+    int[] path = new int[p.length + 1];
+
+    ArrayDeque<Integer> pendents = new ArrayDeque<>();
+    ArrayDeque<Integer> visitats = new ArrayDeque<>();
+
+    pendents.push(1);
+
+    val[1] = 1;
+
+    for (int j = 2; j <= p.length; j++) {
+      val[j] = Double.NEGATIVE_INFINITY;
+    }
+
+    while (!pendents.isEmpty()) {
+      int act = pendents.getFirst();
+      pendents.remove();
+
+      visitats.add(act);
+
+      for (int i = 2; i <= p[act - 1].length; i++) {
+        double noAgafa = val[i];
+        double agafa = Double.NEGATIVE_INFINITY;
+
+        if (p[act - 1][i - 1] != 0) {
+          agafa = p[act - 1][i - 1] * val[act];
+          if (!visitats.contains(i)) {
+            pendents.addLast(i);
+          }
+        }
+        if (noAgafa > agafa) {
+          val[i] = noAgafa;
+        } else {
+          val[i] = agafa;
+          path[i] = act;
+        }
+      }
+
+    }
+
+    int i = p.length;
+
+    while (i != 1) {
+      int i_aux = path[i];
+      System.out.println("Al " + i + " li passa el " + i_aux);
+      i = i_aux;
+    }
+
+    return val[p.length];
+  }
+
 
   void seleccionats() {
     int i = seleccionats[posicions.length][posicions.length][0];
