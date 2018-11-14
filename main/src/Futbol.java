@@ -186,4 +186,6 @@ Aplicar el algoritmo al ejemplo de abajo, indicando la estrategia óptima y la
 probabilidad asociada.
 
 
+Floyd-warshall: https://www.sciencedirect.com/science/article/pii/0898122194901236
+
  */
