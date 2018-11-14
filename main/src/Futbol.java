@@ -1,41 +1,36 @@
+import java.util.ArrayList;
+
 public class Futbol {
-
-    // TODO: path
-
     public static void main(String[] args) {
-//        double[][] P = new double[12][12];
-//        P[0][1] = 0.9;
-//        P[0][2] = 0.7;
-//        P[1][2] = 0.6;
-//        P[1][4] = 0.1;
-//        P[2][3] = 0.5;
-//        P[2][5] = 0.1;
-//        P[2][11] = 0.2;
-//        P[3][0] = 0.9;
-//        P[3][2] = 1;
-//        P[3][5] = 0.8;
-//        P[4][11] = 0.7;
-//        P[5][4] = 0.3;
-//        P[5][11] = 0.6;
-
-
-        double[][] P = new double[5][5];
-        P[0][3] = 1;
-        P[1][4] = 1;
-        P[2][1] = 1;
+        double[][] P = new double[12][12];
+        P[0][1] = 0.9;
+        P[0][2] = 0.7;
+        P[1][2] = 0.6;
+        P[1][4] = 0.1;
+        P[2][3] = 0.5;
+        P[2][5] = 0.1;
+        P[2][11] = 0.2;
+        P[3][0] = 0.9;
         P[3][2] = 1;
+        P[3][5] = 0.8;
+        P[4][11] = 0.7;
+        P[5][4] = 0.3;
+        P[5][11] = 0.6;
 
 
+//        double[][] P = new double[5][5];
+//        P[0][3] = 1;
+//        P[1][4] = 1;
+//        P[2][1] = 1;
+//        P[3][2] = 1;
 
-
-
-        double[][] P = {
-                { 0,  0,  0,  1,  0},
-                { 0,  0,  0,  0,  1},
-                { 0,  1,  0,  0,  0},
-                { 0,  0,  1,  0,  0},
-                {0,0,0,0,0}
-        };
+//        double[][] P = {
+//                { 0,  0,  0,  1,  0},
+//                { 0,  0,  0,  0,  1},
+//                { 0,  1,  0,  0,  0},
+//                { 0,  0,  1,  0,  0},
+//                {0,0,0,0,0}
+//        };
 
 //        double[][] P = {
 //                { 0,  0,  0,  1,  0},
@@ -61,13 +56,15 @@ public class Futbol {
 //                {0,0,0,0,1}
 //        };
 
-        for (int i = 0; i < P.length; i++) {
-            for (int j = 0; j < P.length; j++) {
-                if(i==j)P[i][j] = 1;
-            }
-
-        }
-        System.out.println(optima(P));
+//        for (int i = 0; i < P.length; i++) {
+//            for (int j = 0; j < P.length; j++) {
+//                if(i==j)P[i][j] = 1;
+//            }
+//
+//        }
+        //System.out.println(optima(P));
+        //System.out.println(floydWarshall(P));
+        System.out.println(floydWarshallPath(P));
     }
 
     static double optima(double[][] P){
@@ -95,6 +92,78 @@ public class Futbol {
     }
 
 
+    static double floydWarshall(double graph[][]) {
+        double dist[][] = new double[graph.length][graph.length];
+        int i, j, k;
+
+        for (i = 0; i < graph.length; i++)
+            for (j = 0; j < graph.length; j++)
+                dist[i][j] = graph[i][j];
+
+        Util.printMatrix(dist);
+        System.out.println("ORIGINAL ^");
+        for (k = 0; k < graph.length; k++) {
+            for (i = 0; i < graph.length; i++) {
+                for (j = 0; j < graph.length; j++) {
+                    if (i != k && j != k && i != j) {
+                        //Per a anar de i->j  mirem si es millor anar de i->k i de k->j
+                        System.out.println("i=" + i + "  k=" + k + "  j=" + j);
+                        if (dist[i][k] * dist[k][j] > dist[i][j]) {
+                            dist[i][j] = dist[i][k] * dist[k][j];
+
+                            Util.printMatrix(dist);
+                        }
+                    }
+                }
+            }
+        }
+
+        return dist[0][graph.length-1];
+    }
+
+    static double floydWarshallPath(double graph[][]) {
+        double dist[][] = new double[graph.length][graph.length];
+        int path[][] = new int[graph.length][graph.length];
+
+        int i, j, k;
+
+        for (i = 0; i < graph.length; i++) {
+            for (j = 0; j < graph.length; j++) {
+                dist[i][j] = graph[i][j];
+                path[i][j] = j;
+            }
+        }
+
+        for (k = 0; k < graph.length; k++) {
+            for (i = 0; i < graph.length; i++) {
+                for (j = 0; j < graph.length; j++) {
+                    if (i != k && j != k && i != j) {
+                        if (dist[i][k] * dist[k][j] > dist[i][j]) {
+                            dist[i][j] = dist[i][k] * dist[k][j];
+                            path[i][j] = path[i][k];
+                        }
+                    }
+                }
+            }
+        }
+
+        if (path[0][graph.length-1] == 0) {
+            System.out.println("NO HI HA SOLUCIO");
+        } else {
+            ArrayList<Integer> solucio = new ArrayList<>();
+            int u = 0;
+            int v = graph.length-1;
+            solucio.add(u+1);
+            while (u != v) {
+                u = path[u][v];
+                solucio.add(u+1);
+            }
+            System.out.println("CAMI:");
+            System.out.println(solucio);
+        }
+
+        return dist[0][graph.length-1];
+    }
 }
 
 /*
@@ -116,5 +185,7 @@ decir, la secuencia de pases entre 1 y 12 que maximice la probabilidad de salir 
 Aplicar el algoritmo al ejemplo de abajo, indicando la estrategia óptima y la
 probabilidad asociada.
 
+
+Floyd-warshall: https://www.sciencedirect.com/science/article/pii/0898122194901236
 
  */
