@@ -1,6 +1,8 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Futbol {
@@ -19,7 +21,7 @@ public class Futbol {
     this.provMax = 0;
     this.ruta = new ArrayDeque<>();
     this.rutaMax = new ArrayDeque<>();
-    this.seleccionats = new int[posicions.length+1][posicions.length+1][2];
+    this.seleccionats = new int[posicions.length + 1][posicions.length + 1][2];
   }
 
   public static void main(String[] args) {
@@ -53,6 +55,14 @@ public class Futbol {
     System.out.println(graf.maximitzaIter());
     graf.seleccionats();
 
+    double[][] P = new double[5][5];
+    P[0][3] = 1;
+    P[1][4] = 1;
+    P[2][1] = 1;
+    P[3][2] = 1;
+
+    graf.bellmanFord(P);
+
   }
 
   private double maximitzaIter() {
@@ -71,13 +81,13 @@ public class Futbol {
           entra = posicions[j - 1][i - 1] * val[j][j - 1];
         }
 
-        if (entra> noEntra){
+        if (entra > noEntra) {
           val[i][j] = entra;
           seleccionats[i][j][0] = j;
-          seleccionats[i][j][1] = j-1;
+          seleccionats[i][j][1] = j - 1;
         } else {
           seleccionats[i][j][0] = i;
-          seleccionats[i][j][1] = j-1;
+          seleccionats[i][j][1] = j - 1;
 
           val[i][j] = noEntra;
         }
@@ -90,15 +100,49 @@ public class Futbol {
     return val[posicions.length][posicions.length];
   }
 
+  private double bellmanFord(double[][] p) {
+    double[] val = new double[p.length + 1];
+
+    ArrayDeque<Integer> pendents = new ArrayDeque<>();
+    ArrayDeque<Integer> visitats = new ArrayDeque<>();
+
+    pendents.push(1);
+
+    for (int j = 2; j < p.length; j++) {
+      val[j] = Double.POSITIVE_INFINITY;
+    }
+
+    while(!pendents.isEmpty()){
+      int act = pendents.pop();
+      visitats.push(act);
+
+      for (int i = 2; i <= p[act-1].length; i++) {
+        double noAgafa = val[i];
+        double agafa = Double.POSITIVE_INFINITY;
+
+        if(p[act-1][i-1] != 0){
+          agafa = p[act-1][i-1] + val[act];
+          if(!visitats.contains(i)){
+            pendents.push(i);
+          }
+        }
+        val[i] = Math.min(noAgafa, agafa);
+      }
+
+      System.out.println(Arrays.toString(val));
+    }
+    return val[p.length];
+  }
+
   void seleccionats() {
     int i = seleccionats[posicions.length][posicions.length][0];
     int j = seleccionats[posicions.length][posicions.length][1];
 
-    while(i!=0 && j!=0){
+    while (i != 0 && j != 0) {
       int i_aux = seleccionats[i][j][0];
       int j_aux = seleccionats[i][j][1];
 
-      if(i_aux!=i){
+      if (i_aux != i) {
         System.out.printf("Al jugador %d li ha passat el %d\n", i, j);
       }
 
