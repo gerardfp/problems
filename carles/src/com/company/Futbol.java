@@ -61,7 +61,7 @@ public class Futbol {
     P[2][1] = 1;
     P[3][2] = 1;
 
-    graf.bellmanFord(P);
+    //graf.bellmanFord(P);
     graf.bellmanFordProb(distancies);
 
   }
@@ -107,14 +107,14 @@ public class Futbol {
     ArrayDeque<Integer> pendents = new ArrayDeque<>();
     ArrayDeque<Integer> visitats = new ArrayDeque<>();
 
-    pendents.push(1);
+    pendents.add(1);
 
     for (int j = 2; j <= p.length; j++) {
       val[j] = Double.POSITIVE_INFINITY;
     }
 
     while(!pendents.isEmpty()){
-      int act = pendents.pop();
+      int act = pendents.getFirst();
       visitats.push(act);
 
       System.out.println(act);
@@ -126,7 +126,7 @@ public class Futbol {
         if(p[act-1][i-1] != 0){
           agafa = p[act-1][i-1] + val[act];
           if(!visitats.contains(i)){
-            pendents.push(i);
+            pendents.addLast(i);
           }
         }
         val[i] = Math.min(noAgafa, agafa);
@@ -152,8 +152,10 @@ public class Futbol {
     }
 
     while(!pendents.isEmpty()){
-      int act = pendents.pop();
-      visitats.push(act);
+      int act = pendents.getFirst();
+      pendents.remove();
+
+      visitats.add(act);
 
       System.out.println(act);
 
@@ -164,7 +166,7 @@ public class Futbol {
         if(p[act-1][i-1] != 0){
           agafa = p[act-1][i-1] * val[act];
           if(!visitats.contains(i)){
-            pendents.push(i);
+            pendents.addLast(i);
           }
         }
         val[i] = Math.max(noAgafa, agafa);
