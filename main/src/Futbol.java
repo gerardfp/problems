@@ -63,8 +63,9 @@ public class Futbol {
 //
 //        }
         //System.out.println(optima(P));
+        System.out.println(BellmanFord(P));
         //System.out.println(floydWarshall(P));
-        System.out.println(floydWarshallPath(P));
+        //System.out.println(floydWarshallPath(P));
     }
 
     static double optima(double[][] P){
@@ -91,6 +92,34 @@ public class Futbol {
         return K[P.length][P.length];
     }
 
+    static double BellmanFord(double[][] graph) {
+        double dist[] = new double[graph.length];
+
+
+        for (int i=0; i<graph.length; ++i)
+            dist[i] = Double.NEGATIVE_INFINITY;
+        dist[0] = 1;
+
+
+        for (int k = 1; k < graph.length; k++) {
+            for (int i=0; i<graph.length; ++i) {
+                for (int j=0; j<graph.length; ++j) {
+                    if (graph[i][j] != 0 && dist[i] != Double.POSITIVE_INFINITY && dist[i] * graph[i][j] > dist[j]) {
+                        dist[j] = dist[i] * graph[i][j];
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < graph.length; i++) {
+            for (int j=0; j<graph.length; ++j) {
+                if (graph[i][j] != 0 && dist[i] != Double.POSITIVE_INFINITY && dist[i] * graph[i][j] > dist[j])
+                    System.out.println("Graph contains negative weight cycle");
+            }
+        }
+        //Util.printArray(dist);
+        return dist[graph.length-1];
+    }
 
     static double floydWarshall(double graph[][]) {
         double dist[][] = new double[graph.length][graph.length];

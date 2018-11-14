@@ -46,6 +46,20 @@ public class Util {
         System.out.println("----");
     }
 
+    static void printArray(double[] a){
+        for (int i = 0; i < a.length; i++) {
+            if(a[i] == Double.NEGATIVE_INFINITY){
+                System.out.print("     -");
+            }else if(a[i] == Double.POSITIVE_INFINITY){
+                System.out.print("     +");
+            }else {
+                System.out.printf("%6.2f", a[i]);
+            }
+        }
+        System.out.println();
+        System.out.println("----");
+    }
+
     static int maxDigits(int[] a){
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
