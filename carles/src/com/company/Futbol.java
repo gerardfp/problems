@@ -62,8 +62,7 @@ public class Futbol {
     P[3][2] = 1;
 
     //graf.bellmanFord(P);
-    graf.bellmanFordProb(distancies);
-
+    System.out.println(graf.bellmanFordProb(distancies));
   }
 
   private double maximitzaIter() {
@@ -113,19 +112,19 @@ public class Futbol {
       val[j] = Double.POSITIVE_INFINITY;
     }
 
-    while(!pendents.isEmpty()){
+    while (!pendents.isEmpty()) {
       int act = pendents.getFirst();
       visitats.push(act);
 
       System.out.println(act);
 
-      for (int i = 2; i <= p[act-1].length; i++) {
+      for (int i = 2; i <= p[act - 1].length; i++) {
         double noAgafa = val[i];
         double agafa = Double.POSITIVE_INFINITY;
 
-        if(p[act-1][i-1] != 0){
-          agafa = p[act-1][i-1] + val[act];
-          if(!visitats.contains(i)){
+        if (p[act - 1][i - 1] != 0) {
+          agafa = p[act - 1][i - 1] + val[act];
+          if (!visitats.contains(i)) {
             pendents.addLast(i);
           }
         }
@@ -139,6 +138,7 @@ public class Futbol {
 
   private double bellmanFordProb(double[][] p) {
     double[] val = new double[p.length + 1];
+    int[] path = new int[p.length + 1];
 
     ArrayDeque<Integer> pendents = new ArrayDeque<>();
     ArrayDeque<Integer> visitats = new ArrayDeque<>();
@@ -151,29 +151,40 @@ public class Futbol {
       val[j] = Double.NEGATIVE_INFINITY;
     }
 
-    while(!pendents.isEmpty()){
+    while (!pendents.isEmpty()) {
       int act = pendents.getFirst();
       pendents.remove();
 
       visitats.add(act);
 
-      System.out.println(act);
-
-      for (int i = 2; i <= p[act-1].length; i++) {
+      for (int i = 2; i <= p[act - 1].length; i++) {
         double noAgafa = val[i];
         double agafa = Double.NEGATIVE_INFINITY;
 
-        if(p[act-1][i-1] != 0){
-          agafa = p[act-1][i-1] * val[act];
-          if(!visitats.contains(i)){
+        if (p[act - 1][i - 1] != 0) {
+          agafa = p[act - 1][i - 1] * val[act];
+          if (!visitats.contains(i)) {
             pendents.addLast(i);
           }
         }
-        val[i] = Math.max(noAgafa, agafa);
+        if (noAgafa > agafa) {
+          val[i] = noAgafa;
+        } else {
+          val[i] = agafa;
+          path[i] = act;
+        }
       }
 
-      System.out.println(Arrays.toString(val));
     }
+
+    int i = p.length;
+
+    while (i != 1) {
+      int i_aux = path[i];
+      System.out.println("Al " + i + " li passa el " + i_aux);
+      i = i_aux;
+    }
+
     return val[p.length];
   }
 
