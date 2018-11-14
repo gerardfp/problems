@@ -24,7 +24,7 @@ public class Util {
                 }else if(m[i][j] == Double.POSITIVE_INFINITY){
                     System.out.printf("  +");
                 }else {
-                    System.out.printf("%3.0f", m[i][j]);
+                    System.out.printf("%6.2f", m[i][j]);
                 }
             }
             System.out.println();
