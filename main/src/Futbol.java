@@ -1,4 +1,6 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Futbol {
     public static void main(String[] args) {
@@ -63,9 +65,11 @@ public class Futbol {
 //
 //        }
         //System.out.println(optima(P));
-        System.out.println(bellmanFord(P));
+        //System.out.println(bellmanFordCarles(P));
+        //System.out.println(bellmanFord(P));
         //System.out.println(floydWarshall(P));
-        //System.out.println(floydWarshallPath(P));
+        System.out.println(bellmanFordPath(P));
+        System.out.println(floydWarshallPath(P));
     }
 
     static double falcoGonzalez(double[][] P){
@@ -92,7 +96,46 @@ public class Futbol {
         return K[P.length][P.length];
     }
 
+    static double bellmanFordCarles(double[][] p) {
+        double[] val = new double[p.length + 1];
+
+        ArrayDeque<Integer> pendents = new ArrayDeque<>();
+        ArrayDeque<Integer> visitats = new ArrayDeque<>();
+
+        pendents.push(1);
+
+        val[1] = 1;
+
+        for (int j = 2; j <= p.length; j++) {
+            val[j] = Double.NEGATIVE_INFINITY;
+        }
+
+        while(!pendents.isEmpty()){
+            int act = pendents.getFirst();
+            pendents.remove();
+
+            visitats.add(act);
+
+            for (int i = 2; i <= p[act-1].length; i++) {
+                double noAgafa = val[i];
+                double agafa = Double.NEGATIVE_INFINITY;
+
+                if(p[act-1][i-1] != 0){
+                    agafa = p[act-1][i-1] * val[act];
+                    if(!visitats.contains(i)){
+                        pendents.addLast(i);
+                    }
+                }
+                val[i] = Math.max(noAgafa, agafa);
+            }
+
+        }
+        return val[p.length];
+    }
+
+
     static double bellmanFord(double[][] graph) {
+        /*https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/*/
         double dist[] = new double[graph.length];
 
         for (int i=0; i<graph.length; ++i)
@@ -102,7 +145,7 @@ public class Futbol {
         for (int k = 1; k < graph.length; k++) {
             for (int i=0; i<graph.length; ++i) {
                 for (int j=0; j<graph.length; ++j) {
-                    if (graph[i][j] != 0 && dist[i] != Double.POSITIVE_INFINITY && dist[i] * graph[i][j] > dist[j]) {
+                    if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j]) {
                         dist[j] = dist[i] * graph[i][j];
                     }
                 }
@@ -111,11 +154,58 @@ public class Futbol {
 
         for (int i = 0; i < graph.length; i++) {
             for (int j=0; j<graph.length; ++j) {
-                if (graph[i][j] != 0 && dist[i] != Double.POSITIVE_INFINITY && dist[i] * graph[i][j] > dist[j])
+                if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j])
                     System.out.println("Graph contains negative weight cycle");
             }
         }
 
+        return dist[graph.length-1];
+    }
+
+    static double bellmanFordPath(double[][] graph) {
+        /*https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/*/
+
+        // TODO: arreglar lo del path
+        double dist[] = new double[graph.length];
+        //int path[] = new int[graph.length];
+        ArrayList<Integer> path = new ArrayList<>();
+
+        for (int i=0; i<graph.length; ++i)
+            dist[i] = Double.NEGATIVE_INFINITY;
+        dist[0] = 1;
+
+        //path[0] = 1;
+        //int pathIndex = 1;
+        path.add(1);
+
+        for (int k = 1; k < graph.length; k++) {
+            for (int i=0; i<graph.length; ++i) {
+                for (int j=0; j<graph.length; ++j) {
+                    if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j]) {
+                        dist[j] = dist[i] * graph[i][j];
+
+                        if(i != j && j != k && path.get(path.size()-1) != 12) {
+                            path.add(j+1);
+                        }
+//                        if(i != j && j != k && i != k && path[pathIndex-1] != 12) {
+//                            System.out.println("i=" + i + "  k=" + k + "  j=" + (j + 1));
+//                            path[pathIndex] = j + 1;
+//                            pathIndex++;
+//                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < graph.length; i++) {
+            for (int j=0; j<graph.length; ++j) {
+                if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j])
+                    System.out.println("Graph contains negative weight cycle");
+            }
+        }
+
+        //Util.printArray(path);
+        System.out.println(path);
         return dist[graph.length-1];
     }
 
@@ -127,18 +217,14 @@ public class Futbol {
             for (j = 0; j < graph.length; j++)
                 dist[i][j] = graph[i][j];
 
-        Util.printMatrix(dist);
-        System.out.println("ORIGINAL ^");
         for (k = 0; k < graph.length; k++) {
             for (i = 0; i < graph.length; i++) {
                 for (j = 0; j < graph.length; j++) {
                     if (i != k && j != k && i != j) {
                         //Per a anar de i->j  mirem si es millor anar de i->k i de k->j
-                        System.out.println("i=" + i + "  k=" + k + "  j=" + j);
+                        //System.out.println("i=" + i + "  k=" + k + "  j=" + j);
                         if (dist[i][k] * dist[k][j] > dist[i][j]) {
                             dist[i][j] = dist[i][k] * dist[k][j];
-
-                            Util.printMatrix(dist);
                         }
                     }
                 }
@@ -185,7 +271,6 @@ public class Futbol {
                 u = path[u][v];
                 solucio.add(u+1);
             }
-            System.out.println("CAMI:");
             System.out.println(solucio);
         }
 
