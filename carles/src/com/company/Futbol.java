@@ -108,13 +108,15 @@ public class Futbol {
 
     pendents.push(1);
 
-    for (int j = 2; j < p.length; j++) {
+    for (int j = 2; j <= p.length; j++) {
       val[j] = Double.POSITIVE_INFINITY;
     }
 
     while(!pendents.isEmpty()){
       int act = pendents.pop();
       visitats.push(act);
+
+      System.out.println(act);
 
       for (int i = 2; i <= p[act-1].length; i++) {
         double noAgafa = val[i];
