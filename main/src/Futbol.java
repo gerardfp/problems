@@ -1,6 +1,4 @@
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class Futbol {
     public static void main(String[] args) {
@@ -34,96 +32,39 @@ public class Futbol {
 //                {0,0,0,0,0}
 //        };
 
-//        double[][] P = {
-//                { 0,  0,  0,  1,  0},
-//                { 0,  0,  1,  0,  1},
-//                { 0,  0,  0,  0,  1},
-//                { 0,  1,  0,  0,  0},
-//                {0,0,0,0,0}
-//        };
-
-//        double[][] P = {
-//                { 0, .9, .1, .0, .0},
-//                {.0,  0, .9, .1, .0},
-//                {.1, .0,  0, .9, .1},
-//                {.0, .0, .0,  0, .9},
-//                {0,0,0,0,0}
-//        };
-
-//        double[][] P = {
-//                { 1, .5, .4, .0, .0},
-//                {.0,  1, .5, .1, .1},
-//                {.4,  0,  1, .9, .5},
-//                {.0, .0, .0,  1, .1},
-//                {0,0,0,0,1}
-//        };
-
-//        for (int i = 0; i < P.length; i++) {
-//            for (int j = 0; j < P.length; j++) {
-//                if(i==j)P[i][j] = 1;
-//            }
-//
-//        }
         //System.out.println(optima(P));
 
-        System.out.println(dijkstraCarles(P));
+        System.out.println(spfa(P));
         //System.out.println(bellmanFord(P));
         //System.out.println(floydWarshall(P));
 //        System.out.println(bellmanFordPath(P));
 //        System.out.println(floydWarshallPath(P));
     }
 
-    static double falcoGonzalez(double[][] P){
-        double[][] K = new double[P.length+1][P.length+1];
-        for (int i = 0; i <= P.length; i++) {
-            K[i][0] = 0;
-        }
-
-        K[0][1] = 1;  // la jugada se inicia en el portero (desde fora del camp, soloes se pot pasar al portero)
-
-        for (int i = 1; i < P.length+1; i++) {
-            for (int j = 1; j < P.length+1; j++) {
-                double max = Double.NEGATIVE_INFINITY;
-                for (int k = 0; k < i; k++) {
-                    double prob = K[i-1][k+1] * P[k][j-1];
-                    if (prob > max) {
-                        max = prob;
-                    }
-                }
-                K[i][j] = max;
-            }
-        }
-        Util.printMatrix(K);
-        return K[P.length][P.length];
-    }
-
-    static double dijkstraCarles(double[][] p) {
+    static double spfa(double[][] p) {
+        // https://github.com/clarkchen/data_structure/blob/master/src/main/java/Graph/SPFA/SPFA.java
         double[] val = new double[p.length];
         int[] path = new int[p.length];
 
-        ArrayDeque<Integer> pendents = new ArrayDeque<>();
-        ArrayDeque<Integer> visitats = new ArrayDeque<>();
+        Queue<Integer> q =  new LinkedList<>();
 
         val[0] = 1;
         for (int j = 1; j < p.length; j++) {
             val[j] = Double.NEGATIVE_INFINITY;
         }
 
-        pendents.push(0);
-        while (!pendents.isEmpty()) {
-            int act = pendents.pop();
-
-            visitats.add(act);
+        q.offer(0);
+        while (!q.isEmpty()) {
+            int act = q.poll();
 
             for (int i = 1; i < p[act].length; i++) {
-                if (p[act][i] != 0) {
-                    if (!visitats.contains(i)) {
-                        pendents.addLast(i);
-                    }
-
+                if (p[act][i] != 0) { // este if sobraria
                     if (val[i] < p[act][i] * val[act]) {
                         val[i] = p[act][i] * val[act];
                         path[i] = act;
+                        if (!q.contains(i)) {
+                            q.offer(i);
+                        }
                     }
                 }
             }
