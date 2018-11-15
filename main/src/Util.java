@@ -43,7 +43,6 @@ public class Util {
             }
         }
         System.out.println();
-        System.out.println("----");
     }
 
     static void printArray(double[] a){
