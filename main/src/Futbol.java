@@ -65,11 +65,12 @@ public class Futbol {
 //
 //        }
         //System.out.println(optima(P));
-        //System.out.println(bellmanFordCarles(P));
+
+        System.out.println(bellmanFordCarles2(P));
         //System.out.println(bellmanFord(P));
         //System.out.println(floydWarshall(P));
-        System.out.println(bellmanFordPath(P));
-        System.out.println(floydWarshallPath(P));
+//        System.out.println(bellmanFordPath(P));
+//        System.out.println(floydWarshallPath(P));
     }
 
     static double falcoGonzalez(double[][] P){
@@ -96,41 +97,45 @@ public class Futbol {
         return K[P.length][P.length];
     }
 
-    static double bellmanFordCarles(double[][] p) {
-        double[] val = new double[p.length + 1];
+    static double bellmanFordCarles2(double[][] p) {
+        double[] val = new double[p.length];
+        int[] path = new int[p.length];
 
         ArrayDeque<Integer> pendents = new ArrayDeque<>();
         ArrayDeque<Integer> visitats = new ArrayDeque<>();
 
-        pendents.push(1);
-
-        val[1] = 1;
-
-        for (int j = 2; j <= p.length; j++) {
+        val[0] = 1;
+        for (int j = 1; j < p.length; j++) {
             val[j] = Double.NEGATIVE_INFINITY;
         }
 
-        while(!pendents.isEmpty()){
-            int act = pendents.getFirst();
-            pendents.remove();
+        pendents.push(0);
+        while (!pendents.isEmpty()) {
+            int act = pendents.pop();
 
             visitats.add(act);
 
-            for (int i = 2; i <= p[act-1].length; i++) {
-                double noAgafa = val[i];
-                double agafa = Double.NEGATIVE_INFINITY;
-
-                if(p[act-1][i-1] != 0){
-                    agafa = p[act-1][i-1] * val[act];
-                    if(!visitats.contains(i)){
+            for (int i = 1; i < p[act].length; i++) {
+                if (p[act][i] != 0) {
+                    if (!visitats.contains(i)) {
                         pendents.addLast(i);
                     }
-                }
-                val[i] = Math.max(noAgafa, agafa);
-            }
 
+                    if (val[i] < p[act][i] * val[act]) {
+                        val[i] = p[act][i] * val[act];
+                        path[i] = act;
+                    }
+                }
+            }
         }
-        return val[p.length];
+
+        int i = p.length-1;
+        while (i != 0) {
+            System.out.println("Al " + i + " li passa el " + path[i]);
+            i = path[i];
+        }
+
+        return val[p.length-1];
     }
 
 
