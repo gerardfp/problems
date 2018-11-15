@@ -66,7 +66,7 @@ public class Futbol {
 //        }
         //System.out.println(optima(P));
 
-        System.out.println(bellmanFordCarles2(P));
+        System.out.println(dijkstraCarles(P));
         //System.out.println(bellmanFord(P));
         //System.out.println(floydWarshall(P));
 //        System.out.println(bellmanFordPath(P));
@@ -97,7 +97,7 @@ public class Futbol {
         return K[P.length][P.length];
     }
 
-    static double bellmanFordCarles2(double[][] p) {
+    static double dijkstraCarles(double[][] p) {
         double[] val = new double[p.length];
         int[] path = new int[p.length];
 
