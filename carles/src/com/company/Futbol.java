@@ -61,8 +61,26 @@ public class Futbol {
     P[2][1] = 1;
     P[3][2] = 1;
 
-    //graf.bellmanFord(P);
-    System.out.println(graf.bellmanFordProb(distancies));
+
+    double[][] negatius = new double[4][4];
+    negatius[0][1] = 5;
+    negatius[0][3] = 2;
+    negatius[1][2] = -5;
+    negatius[2][3] = 1;
+
+    graf.wtf(P);
+    System.out.println();
+    graf.bellmanFord(P);
+    System.out.println();
+    graf.dijkstra(P);
+
+    graf.wtf(negatius);
+    System.out.println();
+    graf.bellmanFord(negatius);
+    System.out.println();
+    graf.dijkstra(negatius);
+
+    //System.out.println(graf.bellmanFordProb(distancies));
   }
 
   private double maximitzaIter() {
@@ -100,13 +118,13 @@ public class Futbol {
     return val[posicions.length][posicions.length];
   }
 
-  private double bellmanFord(double[][] p) {
+  private double wtf(double[][] p) {
     double[] val = new double[p.length + 1];
 
     ArrayDeque<Integer> pendents = new ArrayDeque<>();
     ArrayDeque<Integer> visitats = new ArrayDeque<>();
 
-    pendents.add(1);
+    pendents.push(1);
 
     for (int j = 2; j <= p.length; j++) {
       val[j] = Double.POSITIVE_INFINITY;
@@ -114,9 +132,10 @@ public class Futbol {
 
     while (!pendents.isEmpty()) {
       int act = pendents.getFirst();
-      visitats.push(act);
+      pendents.remove();
 
-      System.out.println(act);
+      visitats.add(act);
+
 
       for (int i = 2; i <= p[act - 1].length; i++) {
         double noAgafa = val[i];
@@ -136,7 +155,7 @@ public class Futbol {
     return val[p.length];
   }
 
-  private double bellmanFordProb(double[][] p) {
+  private double wtfProb(double[][] p) {
     double[] val = new double[p.length + 1];
     int[] path = new int[p.length + 1];
 
@@ -188,6 +207,96 @@ public class Futbol {
     return val[p.length];
   }
 
+  private double bellmanFord(double[][] p) {
+    double[] val = new double[p.length];
+
+    for (int i = 1; i < p.length; i++) {
+      val[i] = Double.POSITIVE_INFINITY;
+    }
+
+    for (int iter = 0; iter < p.length - 1; iter++) {
+      for (int i = 0; i < p.length; i++) {
+        for (int j = 0; j < p.length; j++) {
+          if (p[i][j] != 0) {
+            double value = p[i][j] + val[i];
+            if (val[j] > value) {
+              val[j] = value;
+            }
+          }
+        }
+      }
+
+      System.out.println(Arrays.toString(val));
+    }
+
+    return val[p.length - 1];
+  }
+
+  private double bellmanFordProb(double[][] p) {
+    double[] val = new double[p.length];
+
+    val[0] = 1;
+
+    for (int i = 1; i < p.length; i++) {
+      val[i] = Double.NEGATIVE_INFINITY;
+    }
+
+    for (int iter = 0; iter < p.length - 1; iter++) {
+      for (int i = 0; i < p.length; i++) {
+        for (int j = 0; j < p.length; j++) {
+          if (p[i][j] != 0) {
+            double value = p[i][j] * val[i];
+            if (val[j] < value) {
+              val[j] = value;
+            }
+          }
+        }
+      }
+
+      System.out.println(Arrays.toString(val));
+    }
+
+    return val[p.length - 1];
+  }
+
+  private double dijkstra(double[][] p) {
+    double val[] = new double[p.length];
+
+    for (int i = 1; i < p.length; i++) {
+      val[i] = Double.POSITIVE_INFINITY;
+    }
+
+    ArrayDeque<Integer> pen = new ArrayDeque<>();
+    //ArrayDeque<Integer> col = new ArrayDeque<>();
+
+    for (int i = 0; i < p.length; i++) {
+      pen.add(i);
+    }
+
+    while (!pen.isEmpty()) {
+      //busquem
+      double value = Double.POSITIVE_INFINITY;
+      int act = -1;
+
+      for (int i = 0; i < p.length; i++) {
+        if (pen.contains(i) && val[i] <= value) {
+          value = val[i];
+          act = i;
+        }
+      }
+
+      pen.remove(act);
+
+      for (int i = 0; i < p.length; i++) {
+        if (p[act][i] != 0 && val[i] > p[act][i] + val[act]) {
+          val[i] = p[act][i] + val[act];
+        }
+      }
+      System.out.println(Arrays.toString(val));
+    }
+
+    return val[val.length - 1];
+  }
 
   void seleccionats() {
     int i = seleccionats[posicions.length][posicions.length][0];
