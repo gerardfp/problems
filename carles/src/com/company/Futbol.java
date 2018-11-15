@@ -62,11 +62,13 @@ public class Futbol {
     P[3][2] = 1;
 
 
-    double[][] negatius = new double[4][4];
-    negatius[0][1] = 5;
-    negatius[0][3] = 2;
-    negatius[1][2] = -5;
-    negatius[2][3] = 1;
+    double[][] negatius = new double[4][5];
+    negatius[0][1] = 2;
+    negatius[0][3] = 1;
+    negatius[0][2] = 99;
+    negatius[1][3] = 2;
+    negatius[2][1] = -300;
+
 
     graf.wtf(P);
     System.out.println();
@@ -119,40 +121,48 @@ public class Futbol {
   }
 
   private double wtf(double[][] p) {
-    double[] val = new double[p.length + 1];
+    double[] val = new double[p.length];
+    int[] path = new int[p.length];
 
     ArrayDeque<Integer> pendents = new ArrayDeque<>();
     ArrayDeque<Integer> visitats = new ArrayDeque<>();
 
-    pendents.push(1);
-
-    for (int j = 2; j <= p.length; j++) {
-      val[j] = Double.POSITIVE_INFINITY;
+    val[0] = 1;
+    for (int j = 1; j < p.length; j++) {
+      val[j] = Double.NEGATIVE_INFINITY;
     }
 
+    pendents.push(0);
     while (!pendents.isEmpty()) {
       int act = pendents.getFirst();
-      pendents.remove();
+      pendents.remove(act);
 
-      visitats.add(act);
+      System.out.printf(pendents.toString());
 
+      //visitats.add(act);
 
-      for (int i = 2; i <= p[act - 1].length; i++) {
-        double noAgafa = val[i];
-        double agafa = Double.POSITIVE_INFINITY;
+      for (int i = 1; i < p[act].length; i++) {
+        if (p[act][i] != 0) {
+          if (!pendents.contains(i)) {
+            pendents.addFirst(i);
+          }
 
-        if (p[act - 1][i - 1] != 0) {
-          agafa = p[act - 1][i - 1] + val[act];
-          if (!visitats.contains(i)) {
-            pendents.addLast(i);
+          if (val[i] < p[act][i] * val[act]) {
+            val[i] = p[act][i] * val[act];
+            path[i] = act;
           }
         }
-        val[i] = Math.min(noAgafa, agafa);
       }
-
       System.out.println(Arrays.toString(val));
     }
-    return val[p.length];
+
+    int i = p.length - 1;
+    while (i != 0) {
+      System.out.println("Al " + i + " li passa el " + path[i]);
+      i = path[i];
+    }
+
+    return val[p.length - 1];
   }
 
   private double wtfProb(double[][] p) {
