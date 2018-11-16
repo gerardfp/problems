@@ -63,13 +63,14 @@ public class TSP {
           rutaMin = new ArrayDeque<>(ruta);
           rutaMin.add(0);
         }
+        costAct -= graph[ini][0];
+
       }
     } else {
       for (int i = 0; i < graph.length; i++) {
         if(graph[ini][i] != 0 && !ruta.contains(i) && costAct + graph[ini][i] < costMin){
           costAct += graph[ini][i];
           ruta.add(i);
-
           _minRouteBnB(i);
 
           ruta.remove(i);
