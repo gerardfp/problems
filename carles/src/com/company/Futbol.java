@@ -70,7 +70,7 @@ public class Futbol {
     negatius[2][1] = -300;
 
 
-    graf.wtf(P);
+    /*graf.wtf(P);
     System.out.println();
     graf.bellmanFord(P);
     System.out.println();
@@ -80,9 +80,9 @@ public class Futbol {
     System.out.println();
     graf.bellmanFord(negatius);
     System.out.println();
-    graf.dijkstra(negatius);
+    graf.dijkstra(negatius);*/
 
-    //System.out.println(graf.bellmanFordProb(distancies));
+    System.out.println(graf.bellmanFordProb(distancies));
   }
 
   private double maximitzaIter() {
@@ -219,6 +219,7 @@ public class Futbol {
 
   private double bellmanFord(double[][] p) {
     double[] val = new double[p.length];
+    int[] pred = new int[p.length];
 
     for (int i = 1; i < p.length; i++) {
       val[i] = Double.POSITIVE_INFINITY;
@@ -231,12 +232,14 @@ public class Futbol {
             double value = p[i][j] + val[i];
             if (val[j] > value) {
               val[j] = value;
+              pred[j] = i;
             }
           }
         }
       }
 
       System.out.println(Arrays.toString(val));
+      System.out.println(Arrays.toString(pred));
     }
 
     return val[p.length - 1];
@@ -244,6 +247,7 @@ public class Futbol {
 
   private double bellmanFordProb(double[][] p) {
     double[] val = new double[p.length];
+    int[] pred = new int[p.length];
 
     val[0] = 1;
 
@@ -258,6 +262,7 @@ public class Futbol {
             double value = p[i][j] * val[i];
             if (val[j] < value) {
               val[j] = value;
+              pred[j] = i;
             }
           }
         }
@@ -266,6 +271,16 @@ public class Futbol {
       System.out.println(Arrays.toString(val));
     }
 
+    int i = pred.length-1;
+    int i_aux = pred[pred.length-1];
+    System.out.printf("Al %d li passa el %d\n", i+1, i_aux+1);
+    while (i>0){
+      i_aux = pred[i];
+      System.out.printf("Al %d li passa el %d\n", i+1, i_aux+1);
+      i = i_aux;
+    }
+
+    System.out.println(Arrays.toString(pred));
     return val[p.length - 1];
   }
 
