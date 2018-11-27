@@ -24,20 +24,24 @@ public class Futbol {
 //        P[2][1] = 1;
 //        P[3][2] = 1;
 
-//        double[][] P = {
-//                { 0,  0,  0,  1,  0},
-//                { 0,  0,  0,  0,  1},
-//                { 0,  1,  0,  0,  0},
-//                { 0,  0,  1,  0,  0},
-//                {0,0,0,0,0}
-//        };
+        double[][] P2 = {
+                { 0,  0,  0,  1,  0},
+                { 0,  0,  0,  0,  1},
+                { 0,  1,  0,  0,  0},
+                { 0,  0,  1,  0,  0},
+                {0,0,0,0,0}
+        };
 
         //System.out.println(optima(P));
 
-        System.out.println(spfa(P));
-        //System.out.println(bellmanFord(P));
-        //System.out.println(floydWarshall(P));
+        //System.out.println(spfa(P));
+        System.out.println(bellmanFord(P));
+        System.out.println(floydWarshall(P));
+//        System.out.println("****PPPPPPPPPPP");
 //        System.out.println(bellmanFordPath(P));
+//        System.out.println();
+//        System.out.println("****P22222222222");
+//        System.out.println(bellmanFordPath(P2));
 //        System.out.println(floydWarshallPath(P));
     }
 
@@ -105,39 +109,29 @@ public class Futbol {
             }
         }
 
+        Util.printArray(dist);
+
         return dist[graph.length-1];
     }
 
     static double bellmanFordPath(double[][] graph) {
         /*https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/*/
 
-        // TODO: arreglar lo del path
         double dist[] = new double[graph.length];
-        //int path[] = new int[graph.length];
-        ArrayList<Integer> path = new ArrayList<>();
+        int path2[] = new int[graph.length];
 
         for (int i=0; i<graph.length; ++i)
             dist[i] = Double.NEGATIVE_INFINITY;
         dist[0] = 1;
-
-        //path[0] = 1;
-        //int pathIndex = 1;
-        path.add(1);
 
         for (int k = 1; k < graph.length; k++) {
             for (int i=0; i<graph.length; ++i) {
                 for (int j=0; j<graph.length; ++j) {
                     if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j]) {
                         dist[j] = dist[i] * graph[i][j];
+                        path2[j] = i;
 
-                        if(i != j && j != k && path.get(path.size()-1) != 12) {
-                            path.add(j+1);
-                        }
-//                        if(i != j && j != k && i != k && path[pathIndex-1] != 12) {
-//                            System.out.println("i=" + i + "  k=" + k + "  j=" + (j + 1));
-//                            path[pathIndex] = j + 1;
-//                            pathIndex++;
-//                        }
+                        Util.printArray(path2);
                     }
                 }
             }
@@ -150,8 +144,7 @@ public class Futbol {
             }
         }
 
-        //Util.printArray(path);
-        System.out.println(path);
+        Util.printArray(path2);
         return dist[graph.length-1];
     }
 
@@ -176,6 +169,8 @@ public class Futbol {
                 }
             }
         }
+
+        Util.printMatrix(dist);
 
         return dist[0][graph.length-1];
     }
@@ -242,6 +237,8 @@ Escribir un algoritmo eficiente que encuentre la estrategia de juego óptima, es
 decir, la secuencia de pases entre 1 y 12 que maximice la probabilidad de salir bien.
 Aplicar el algoritmo al ejemplo de abajo, indicando la estrategia óptima y la
 probabilidad asociada.
+
+sol: 1 3 4 6 12
 
 
 Floyd-warshall: https://www.sciencedirect.com/science/article/pii/0898122194901236
