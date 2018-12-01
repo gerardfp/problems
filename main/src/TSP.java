@@ -1,21 +1,56 @@
+import java.util.ArrayDeque;
+
 public class TSP {
 
+    static private ArrayDeque<Integer> ruta;
+    static private ArrayDeque<Integer> rutaMin;
+    static private int costMin;
+    static private int costAct;
+    static private int[][] graph = {
+            {0, 10, 15, 20},
+            {10, 0, 35, 25},
+            {15, 35, 0, 30},
+            {20, 25, 30, 0}
+    };
+
     public static void main(String[] args) {
-        int[] prices = {1,5,6};
-        System.out.println(tsp(prices, 8));
+        ruta = new ArrayDeque<Integer>();
+        rutaMin = new ArrayDeque<Integer>();
+        costMin = Integer.MAX_VALUE;
+        costAct = 0;
+
+        ruta.add(0);
+        _minRouteBnB(0);
+
+        System.out.println(costMin);
+        System.out.println(rutaMin);
     }
 
-    static int tsp(int[] prices, int size){
-        int[] K = new int[size+1];
+    static void _minRouteBnB(int ini) {
+        if (ruta.size() == graph.length) {
+            if (graph[ini][0] != 0) {
+                costAct += graph[ini][0];
 
-        for (int i = 1; i <= size; i++) {
-            int max = Integer.MIN_VALUE;
-            for (int j = 0; j < i && j < prices.length; j++) {
-                max = Math.max(max, prices[j] + K[i-j-1]);
+                if (costMin > costAct) {
+                    costMin = costAct;
+                    rutaMin = new ArrayDeque<>(ruta);
+                    rutaMin.add(0);
+                }
+                costAct -= graph[ini][0];
+
             }
-            K[i] = max;
+        } else {
+            for (int i = 0; i < graph.length; i++) {
+                if(graph[ini][i] != 0 && !ruta.contains(i) && costAct + graph[ini][i] < costMin){
+                    costAct += graph[ini][i];
+                    ruta.add(i);
+                    _minRouteBnB(i);
+
+                    ruta.remove(i);
+                    costAct -= graph[ini][i];
+                }
+            }
         }
-        return K[size];
     }
 }
 
