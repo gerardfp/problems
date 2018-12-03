@@ -13,19 +13,6 @@ public class TSP {
             {20, 25, 30, 0}
     };
 
-    public static void main(String[] args) {
-        ruta = new ArrayDeque<Integer>();
-        rutaMin = new ArrayDeque<Integer>();
-        costMin = Integer.MAX_VALUE;
-        costAct = 0;
-
-        ruta.add(0);
-        _minRouteBnB(0);
-
-        System.out.println(costMin);
-        System.out.println(rutaMin);
-    }
-
     static void _minRouteBnB(int ini) {
         if (ruta.size() == graph.length) {
             if (graph[ini][0] != 0) {
@@ -51,6 +38,19 @@ public class TSP {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        ruta = new ArrayDeque<>();
+        rutaMin = new ArrayDeque<>();
+        costMin = Integer.MAX_VALUE;
+        costAct = 0;
+
+        ruta.add(0);
+        _minRouteBnB(0);
+
+        System.out.println(costMin);
+        System.out.println(rutaMin);
     }
 }
 

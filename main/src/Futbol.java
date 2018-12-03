@@ -17,7 +17,6 @@ public class Futbol {
         P[5][4] = 0.3;
         P[5][11] = 0.6;
 
-
 //        double[][] P = new double[5][5];
 //        P[0][3] = 1;
 //        P[1][4] = 1;
