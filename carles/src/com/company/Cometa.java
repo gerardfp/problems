@@ -9,7 +9,7 @@ public class Cometa {
   private final int[] p;
   private final int L;
 
-  static Scanner sc;
+  /*static Scanner sc;
 
   static {
     try {
@@ -17,7 +17,10 @@ public class Cometa {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
-  }
+  }*/
+
+  static Scanner sc = new Scanner(System.in);
+
 
   public Cometa(int[] l, int[] p, int L) {
     this.l = l;
@@ -48,9 +51,9 @@ public class Cometa {
   private void optimitza() {
     double[][] val1 = new double[L + 1][p.length + 1];
     double[][] val2 = new double[L + 1][p.length + 1];
-    double[][] val3 = new double[L + 1][p.length + 1];
+    double[][] val3 = new double[p.length + 1][L + 1];
 
-    double formes = 0, minCordes, minPreu = 0;
+    double formes = 0, minCordes, minPreu = 0, formesGerard = 0;
 
     for (int i = 0; i < val1.length; i++) {
       for (int j = 0; j < val1[i].length; j++) {
@@ -96,26 +99,22 @@ public class Cometa {
 
       minPreu = val2[L][p.length];
 
-
       for (int i = 0; i < val3.length; i++) {
-        for (int j = 0; j < val3[i].length; j++) {
-          if (i == 0) {
-            val3[i][j] = 1;
-          } else if (j == 0) {
-            val3[i][j] = 0;
-          } else {
-            for (int k = 0; k < j; k++) {
-              if (i >= l[k]) {
-                val3[i][j] += val3[i-l[k]][j - 1];
-              }
-            }
-          }
-        }
-
-        Util.printMatrix(val3);
+        val3[i][0] = 1;
       }
 
-      formes = val3[L][p.length];
+      for (int i = 1; i <= p.length; i++) {
+        for (int j = 1; j <= L; j++) {
+          double entra = 0;
+          double noEntra = val3[i-1][j];
+          if(j >= l[i-1])
+            entra = val3[i - 1][j - l[i-1]];
+
+          val3[i][j] = entra + noEntra;
+        }
+      }
+
+      formes = val3[p.length][L];
     }
 
 
@@ -127,4 +126,19 @@ public class Cometa {
 
   }
 
+  private int contaFormes(int i, int tamany) {
+    if (tamany == 0) {
+      return 1;
+    } else {
+      int agafa = 0, count = 0;
+      if (i < l.length) {
+
+        if (l[i] <= L) {
+          agafa = contaFormes(i + 1, tamany - l[i]);
+        }
+        count = agafa + contaFormes(i + 1, tamany);
+      }
+      return count;
+    }
+  }
 }
