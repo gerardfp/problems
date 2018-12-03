@@ -4,12 +4,12 @@ import com.sun.jdi.IncompatibleThreadStateException;
 
 public class Change {
   public static void main(String[] args) {
-    int[] tipus = new int[]{2, 5, 3, 6};
-    int[] tipus2 = new int[]{1, 2, 3, 4, 5};
+    int[] tipus = new int[]{1, 2, 3};
+    int[] tipus2 = new int[]{1, 2, 3};
 
     Change change = new Change();
     System.out.println(change.minChange(tipus, 4));
-    System.out.println(change.numChanges(tipus2, 10));
+    System.out.println(change.numChanges(tipus2, 4));
   }
 
   private int minChange(int[] tipus, int n) {
@@ -55,7 +55,7 @@ public class Change {
 
         val[i][j] = Math.max(noAgafem, agafem);
 
-        //Util.printMatrix(val);
+        Util.printMatrix(val);
       }
     }
 

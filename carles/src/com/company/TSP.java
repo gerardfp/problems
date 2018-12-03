@@ -79,4 +79,15 @@ public class TSP {
       }
     }
   }
+
+  private int minRouteBnBIter() {
+    ruta.add(0);
+    _minRouteBnB(0);
+
+    System.out.println(costMin);
+    System.out.println(rutaMin);
+    return costMin;
+  }
+
+
 }

@@ -4,9 +4,9 @@ public class Util {
   public static void printMatrix(int[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[i].length; j++) {
-        if(matrix[i][j] <= Integer.MIN_VALUE + 10){
+        if (matrix[i][j] <= Integer.MIN_VALUE + 10) {
           System.out.printf("  -");
-        }else if(matrix[i][j] == Integer.MAX_VALUE){
+        } else if (matrix[i][j] == Integer.MAX_VALUE) {
           System.out.printf("  +");
         } else {
           System.out.printf("%3d", matrix[i][j]);
@@ -27,14 +27,14 @@ public class Util {
     System.out.println("---");
   }
 
-  static void printMatrix(double[][] m){
+  public static void printMatrix(double[][] m) {
     for (int i = 0; i < m.length; i++) {
       for (int j = 0; j < m[i].length; j++) {
-        if(m[i][j] == Double.NEGATIVE_INFINITY){
+        if (m[i][j] == Double.NEGATIVE_INFINITY) {
           System.out.printf("  -");
-        }else if(m[i][j] == Double.POSITIVE_INFINITY){
+        } else if (m[i][j] >= Double.POSITIVE_INFINITY - 2000) {
           System.out.printf("  +");
-        }else {
+        } else {
           System.out.printf("%3.0f", m[i][j]);
         }
       }
@@ -44,4 +44,13 @@ public class Util {
   }
 
 
+  public static void printMatrix(int[][][] m) {
+    for (int i = 0; i < m.length; i++) {
+      for (int j = 0; j < m[i].length; j++) {
+        System.out.printf("(%d,%d) ", m[i][j][0], m[i][j][1]);
+      }
+      System.out.println();
+    }
+    System.out.println("----");
+  }
 }
