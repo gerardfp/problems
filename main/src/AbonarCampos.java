@@ -8,18 +8,45 @@ public class AbonarCampos {
         int[][][] K = new int[C+1][M+1][N+1];
 
         int max = 0;
-        for (int c = 1; c <= C; c++) {
-            for (int m = 0; m <=M; m++) {
-                for (int n = 0; n <=N; n++) {
-                    K[c][m][n] = v(c-1,m,n) + K[c-1][M-m][N-n];
-                    if(K[c][m][n] > max){
-                        max = K[c][m][n];
+//        TODO: FATAL HORRIBLE
+//        for (int c = 1; c <= C; c++) {
+//            for (int m = 0; m <=M; m++) {
+//                for (int n = 0; n <=N; n++) {
+//                    K[c][m][n] = v(c-1,m,n) + K[c-1][M-m][N-n];
+//                    if(K[c][m][n] > max){
+//                        max = K[c][m][n];
+//                    }
+//                }
+//            }
+//        }
+
+        return max;
+    }
+
+    private static double maxValue(int C, int M, int N) {
+        double[][] val = new double[M + 1][N + 1];
+
+        for (int i = 0; i <= M; i++) {
+            for (int j = 0; j <= N; j++) {
+                if (i == 0 && j == 0) {
+                    val[i][j] = 0;
+                } else {
+                    double max = Double.NEGATIVE_INFINITY;
+                    for (int k = 0; k <= i; k++) {
+                        for (int l = 0; l <= j; l++) {
+                            for (int m = 0; m < C; m++) {
+                                double aux = v(m,k,l) + val[i - k][j - l];
+                                if (aux > max)
+                                    max = aux;
+                            }
+                        }
                     }
+                    val[i][j] = max;
                 }
             }
         }
 
-        return max;
+        return val[2][2];
     }
 
     static int maxValorRecursiu(int C, int M, int N){
@@ -81,17 +108,10 @@ public class AbonarCampos {
             }
         }
 
-//        System.out.println(v[0][1][2]);
-//        System.out.println(v[1][0][1]);
-//        System.out.println(v[2][1][1]);
-//
-//        System.out.println(v[0][2][4]);
-//        System.out.println(v[1][2][4]);
-//        System.out.println(v[2][2][4]);
-
         System.out.println(maxValorDynamic(C, M, N));
         System.out.println(maxValorRecursiu(C-1, M, N));
-        System.out.println(maxValorRecursiuLog(C-1, M, N,0));
+        System.out.println(maxValue(C, M, N));
+//        System.out.println(maxValorRecursiuLog(C-1, M, N,0));
     }
 }
 
