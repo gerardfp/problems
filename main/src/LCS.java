@@ -1,6 +1,6 @@
 public class LCS {
 
-    static int lcs(String M, String N){
+    static int lcsDynamic(String M, String N){
         int[][] K = new int[M.length()+1][N.length()+1];
 
         for (int i = 1; i <= M.length(); i++) {
@@ -52,12 +52,8 @@ public class LCS {
     public static void main(String[] args) {
         String M = "abchhd";
         String N = "azbcvd";
-        System.out.println(lcs(M, N));
+        System.out.println(lcsDynamic(M, N));
         System.out.println(lcsRecursiu(M, N, M.length(), N.length()));
 //        System.out.println(lcsRecursiuLog(M, N, M.length(), N.length(), 1));
     }
 }
-
-/*
- * https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
- */
