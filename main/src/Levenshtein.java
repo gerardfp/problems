@@ -23,7 +23,6 @@ public class Levenshtein {
         }
 
         int i = m.length(), j = n.length();
-
         while(i > 0 || j > 0){
             if(D[i][j] == D[i-1][j] + 1){
                 edicion.add(0,"insertar " + m.charAt(i-1));
@@ -41,7 +40,6 @@ public class Levenshtein {
                 j--;
             }
         }
-
 
         System.out.println(edicion);
         return D[m.length()][n.length()];
