@@ -1,6 +1,6 @@
 public class Levenshtein {
 
-    static int levenshtein2(String m, String n){
+    static int levenshtein(String m, String n){
         int[][] D = new int[m.length()+1][n.length()+1];
 
         for (int i = 1; i <= m.length(); i++) {
@@ -18,7 +18,7 @@ public class Levenshtein {
     }
 
     public static void main(String[] args) {
-        System.out.println(levenshtein2("campo", "ejemplo"));
+        System.out.println(levenshtein("campo", "ejemplo"));
     }
 }
 
