@@ -58,7 +58,6 @@ public class AbonarCampos {
         for (int m = 0; m <= M; m++) {
             for (int n = 0; n <= N; n++) {
                 int valor = v(C, m, n) + maxValorRecursiu(C - 1, M - m, N - n);
-
                 if (valor > max) {
                     max = valor;
                 }
