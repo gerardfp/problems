@@ -7,23 +7,27 @@ public class AbonarCampos {
     static int maxValorDynamic(int C, int M, int N){
         int[][] K = new int[M+1][N+1];
 
-//        for (int m = 0; m <=M; m++) {
-//            for (int n = 0; n <=N; n++) {
-//                int max = 0;
-//                for (int c = 0; c < C; c++) {
-//                    for (int mm = 0; mm <= m; mm++) {
-//                        for (int nn = 0; nn <= n; nn++) {
-//                            int val = v(c, m, n) + K[M - mm][N - nn];
-//                            if (val > max) {
-//                                max = val;
-//                            }
-//                        }
-//                    }
-//                }
-//                K[m][n] = max;
-//                Util.printMatrix(K);
-//            }
-//        }
+        for (int c = 0; c < C; c++) {
+            for (int m = 0; m <=M; m++) {
+                for (int n = 0; n <= N; n++) {
+                    int max = 0;
+                    for (int mm = 0; mm <=m; mm++) {
+                        for (int nn = 0; nn <= n; nn++) {
+
+                            System.out.println("MERDA " + c + " " + m + " " + n + "   K[" + (M - m) + "][" + (N - n) + "]");
+
+
+                            int val = v(c, mm, nn) + K[m - mm][n - nn];
+                            if (val > max) {
+                                max = val;
+                            }
+                        }
+                    }
+                    K[m][n] = max;
+                    Util.printMatrix(K);
+                }
+            }
+        }
 
         return K[M][N];
     }
@@ -52,7 +56,7 @@ public class AbonarCampos {
         int max = Integer.MIN_VALUE;
         for (int m = 0; m <= M; m++) {
             for (int n = 0; n <= N; n++) {
-                System.out.printf("%"+(l+1)*4+"s%s\n"," ", "v(" + C + ", " + m + ", "+ n+")   CALL " + (C-1) + " " + (M-m) + " " + (N-n));
+                System.out.printf("%"+(l+1)*4+"s%s\n"," ", "v(" + C + ", " + m + ", "+ n+")   CALL " + (C-1) + " " + (M-m) + " " + (N-n) + "  ===> " +  (v(C, m, n) + maxValorRecursiu(C-1, M-m, N-n)));
 
                 int valor = v(C, m, n) + maxValorRecursiuLog(C - 1, M - m, N - n, l + 1);
 
@@ -86,9 +90,11 @@ public class AbonarCampos {
             }
         }
 
+        System.out.println("001" + v(0,0,1));
+
         System.out.println(maxValorDynamic(C, M, N));
         System.out.println(maxValorRecursiu(C-1, M, N));
-//        System.out.println(maxValorRecursiuLog(C-1, M, N,0));
+        System.out.println(maxValorRecursiuLog(C-1, M, N,1));
     }
 }
 

@@ -45,10 +45,11 @@ public class CakeCutting {
 
         int[][][][] K = new int[i1+1][i1+1][j1+1][j1+1];
 
-        for (int m = 0; m <= i1; m++) {
+        for (int m = 1; m <= i1; m++) {
             for (int i = 0; i < i1 - m + 1; i++) {
-                for (int k = 0; k <= j1; k++) {
+                for (int k = 1; k <= j1; k++) {
                     for (int j = 0; j < j1 - k + 1; j++) {
+                        System.out.println(i + " " + (i+m) + " " +j + " " + (j+k));
                         if(areEqual(i,i+m,j,j+k)){
                             K[i][i+m][j][j+k] = 0;
                         } else {
