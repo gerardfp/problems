@@ -7,8 +7,8 @@ public class CaminoKAristas {
 
         for (int k = 0; k <= K; k++) {
             for (int s = 0; s <= T; s++) {
-                if(s==T && k==0) D[s][k] = 0;
-                else if(s!=T && k==0) D[s][k] = Double.POSITIVE_INFINITY;
+                if (s==T && k==0) D[s][k] = 0;
+                else if (s!=T && k==0) D[s][k] = Double.POSITIVE_INFINITY;
                 else {
                     double min = Double.POSITIVE_INFINITY;
                     for (int i = 0; i < G.length; i++) {
