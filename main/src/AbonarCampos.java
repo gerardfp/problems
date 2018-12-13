@@ -86,9 +86,9 @@ public class AbonarCampos {
             }
         }
 
-        System.out.println(maxValorDynamic(C, M, N));
-        System.out.println(maxValorRecursiu(C-1, M, N));
-//        System.out.println(maxValorRecursiuLog(C-1, M, N,0));
+//        System.out.println(maxValorDynamic(C, M, N));
+//        System.out.println(maxValorRecursiu(C-1, M, N));
+        System.out.println(maxValorRecursiuLog(C-1, M, N,0));
     }
 }
 
