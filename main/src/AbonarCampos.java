@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class AbonarCampos {
 
     static int maxValorDynamic(int C, int M, int N){
-        int[][] K = new int[M+1][N+1];
+        int[][][] K = new int[C+1][M+1][N+1];
 
 //        for (int m = 0; m <=M; m++) {
 //            for (int n = 0; n <=N; n++) {
@@ -25,7 +25,7 @@ public class AbonarCampos {
 //            }
 //        }
 
-        return K[M][N];
+        return K[C][M][N];
     }
 
     static int maxValorRecursiu(int C, int M, int N){

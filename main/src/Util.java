@@ -20,9 +20,9 @@ public class Util {
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[i].length; j++) {
                 if(m[i][j] == Double.NEGATIVE_INFINITY){
-                    System.out.printf("  -");
+                    System.out.printf("     -");
                 }else if(m[i][j] == Double.POSITIVE_INFINITY){
-                    System.out.printf("  +");
+                    System.out.printf("     +");
                 }else {
                     System.out.printf("%6.2f", m[i][j]);
                 }

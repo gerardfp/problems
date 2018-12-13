@@ -6,7 +6,7 @@ public class CaminoKAristas {
         double[][] D = new double[T+1][K+1];
 
         for (int k = 0; k <= K; k++) {
-            for (int s = S; s <= T; s++) {
+            for (int s = 0; s <= T; s++) {
                 if(s==T && k==0) D[s][k] = 0;
                 else if(s!=T && k==0) D[s][k] = Double.POSITIVE_INFINITY;
                 else {
@@ -21,7 +21,7 @@ public class CaminoKAristas {
             }
         }
 
-        return D[0][K];
+        return D[S][K];
     }
 
     static double minKEdgesRecursiu(int S, int T, int K){
@@ -71,12 +71,10 @@ public class CaminoKAristas {
         G[4][5] = 2;
 
         for (int k = 0; k < 6; k++) {
-            System.out.println(minKEdgesRecursiu(0, 5, k));
-        }
-        System.out.println("---");
-
-        for (int k = 0; k < 6; k++) {
-            System.out.println(minKEdgesDynamic(0, 5, k));
+            System.out.println("*** k=" + k + " ***");
+            System.out.println("RECURSIU  " + minKEdgesRecursiu(1, 5, k));
+            System.out.println("DYNAMIC   " + minKEdgesDynamic(1, 5, k));
+            System.out.println();
         }
     }
 }
