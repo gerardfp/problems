@@ -7,23 +7,23 @@ public class AbonarCampos {
     static int maxValorDynamic(int C, int M, int N){
         int[][][] K = new int[C+1][M+1][N+1];
 
-//        for (int m = 0; m <=M; m++) {
-//            for (int n = 0; n <=N; n++) {
-//                int max = 0;
-//                for (int c = 0; c < C; c++) {
-//                    for (int mm = 0; mm <= m; mm++) {
-//                        for (int nn = 0; nn <= n; nn++) {
-//                            int val = v(c, m, n) + K[M - mm][N - nn];
-//                            if (val > max) {
-//                                max = val;
-//                            }
-//                        }
-//                    }
-//                }
-//                K[m][n] = max;
+        for (int m = 0; m <=M; m++) {
+            for (int n = 0; n <=N; n++) {
+                int max = 0;
+                for (int c = 0; c < C; c++) {
+                    for (int mm = 0; mm <= m; mm++) {
+                        for (int nn = 0; nn <= n; nn++) {
+                            int val = v(c, m, n) + K[c][M - mm][N - nn];
+                            if (val > max) {
+                                max = val;
+                            }
+                        }
+                    }
+                }
+                K[C][m][n] = max;
 //                Util.printMatrix(K);
-//            }
-//        }
+            }
+        }
 
         return K[C][M][N];
     }
@@ -76,18 +76,28 @@ public class AbonarCampos {
         int M = sc.nextInt();
         int N = sc.nextInt();
 
-        v = new int[C][M+1][N+1];
+        while(C!=0) {
+            v = new int[C][M + 1][N + 1];
 
-        for (int i = 0; i < C; i++) {
-            for (int j = 0; j <= M; j++) {
-                for (int k = 0; k <= N; k++) {
-                    v[i][j][k] = sc.nextInt();
+            for (int i = 0; i < C; i++) {
+                for (int j = 0; j <= M; j++) {
+                    for (int k = 0; k <= N; k++) {
+                        v[i][j][k] = sc.nextInt();
+                    }
                 }
             }
+
+            System.out.println("Dynamic  " + maxValorDynamic(C, M, N));
+            System.out.println("Recursiu " + maxValorRecursiu(C-1, M, N));
+            System.out.println(maxValorRecursiuLog(C-1, M, N,0));
+
+            C = sc.nextInt();
+            M = sc.nextInt();
+            N = sc.nextInt();
         }
 
-//        System.out.println(maxValorDynamic(C, M, N));
-//        System.out.println(maxValorRecursiu(C-1, M, N));
+        System.out.println(maxValorDynamic(C, M, N));
+        System.out.println(maxValorRecursiu(C-1, M, N));
         System.out.println(maxValorRecursiuLog(C-1, M, N,0));
     }
 }
