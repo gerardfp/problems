@@ -1,7 +1,4 @@
 public class RodCutting{
-    /*
-    * https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
-    */
 
     static int cutRod(int[] prices, int size){
         int[] K = new int[size+1];
@@ -17,7 +14,11 @@ public class RodCutting{
     }
 
     public static void main(String[] args) {
-	    int[] prices = {1,5,6};
+        int[] prices = {1,5,6};
         System.out.println(cutRod(prices, 8));
     }
 }
+
+/*
+ * https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
+ */
