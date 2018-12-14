@@ -1,5 +1,3 @@
-package com.company;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -7,27 +5,27 @@ import java.util.Scanner;
 public class AbonarCampos {
 
     static int maxValorDynamic(int C, int M, int N){
-        int[][] K = new int[M+1][N+1];
+        int[][][] K = new int[C+1][M+1][N+1];
 
-//        for (int m = 0; m <=M; m++) {
-//            for (int n = 0; n <=N; n++) {
-//                int max = 0;
-//                for (int c = 0; c < C; c++) {
-//                    for (int mm = 0; mm <= m; mm++) {
-//                        for (int nn = 0; nn <= n; nn++) {
-//                            int val = v(c, m, n) + K[M - mm][N - nn];
-//                            if (val > max) {
-//                                max = val;
-//                            }
-//                        }
-//                    }
-//                }
-//                K[m][n] = max;
-//                com.company.Util.printMatrix(K);
-//            }
-//        }
+        for (int m = 0; m <=M; m++) {
+            for (int n = 0; n <=N; n++) {
+                int max = 0;
+                for (int c = 0; c < C; c++) {
+                    for (int mm = 0; mm <= m; mm++) {
+                        for (int nn = 0; nn <= n; nn++) {
+                            int val = v(c, m, n) + K[c][M - mm][N - nn];
+                            if (val > max) {
+                                max = val;
+                            }
+                        }
+                    }
+                }
+                K[C][m][n] = max;
+//                Util.printMatrix(K);
+            }
+        }
 
-        return K[M][N];
+        return K[C][M][N];
     }
 
     static int maxValorRecursiu(int C, int M, int N){
@@ -72,24 +70,34 @@ public class AbonarCampos {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("com.company.AbonarCampos"));
+        Scanner sc = new Scanner(new File("AbonarCampos"));
 
         int C = sc.nextInt();
         int M = sc.nextInt();
         int N = sc.nextInt();
 
-        v = new int[C][M+1][N+1];
+        while(C!=0) {
+            v = new int[C][M + 1][N + 1];
 
-        for (int i = 0; i < C; i++) {
-            for (int j = 0; j <= M; j++) {
-                for (int k = 0; k <= N; k++) {
-                    v[i][j][k] = sc.nextInt();
+            for (int i = 0; i < C; i++) {
+                for (int j = 0; j <= M; j++) {
+                    for (int k = 0; k <= N; k++) {
+                        v[i][j][k] = sc.nextInt();
+                    }
                 }
             }
+
+            System.out.println("Dynamic  " + maxValorDynamic(C, M, N));
+            System.out.println("Recursiu " + maxValorRecursiu(C-1, M, N));
+            System.out.println(maxValorRecursiuLog(C-1, M, N,0));
+
+            C = sc.nextInt();
+            M = sc.nextInt();
+            N = sc.nextInt();
         }
 
-//        System.out.println(maxValorDynamic(C, M, N));
-//        System.out.println(maxValorRecursiu(C-1, M, N));
+        System.out.println(maxValorDynamic(C, M, N));
+        System.out.println(maxValorRecursiu(C-1, M, N));
         System.out.println(maxValorRecursiuLog(C-1, M, N,0));
     }
 }
