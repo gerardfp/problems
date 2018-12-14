@@ -8,30 +8,40 @@ import java.util.List;
 public class Poliominos {
 
     static boolean[][] T = new boolean[8][8];
-    static int Psize = 4;
+    static int Psize = 3;
 
     static List<boolean[][]> Ps;
     static boolean[][] P = new boolean[Psize][Psize-1];
     static int Pcurrentsize = 0;
 
-    static boolean poliominos(int n){
+    static boolean poliominos(int i0, int j0, int n){
 
         if(n==0){
+            System.out.println("isValid");
             Util.printMatrix(P);
+            return true;
         }
 
-        for (int i = 0; i < Psize; i++) {
-            for (int j = 0; j < Psize-1; j++) {
+        if(j0 >= Psize-1) return false;
+        if(i0 >= Psize) return false;
 
-                P[i][j] = true;
-                Pcurrentsize++;
-                if (isValid(i, j)) {
-                    System.out.println("isValid");
-                    Util.printMatrix(P);
-                    poliominos(n - 1);
+
+        for (int i = i0; i < Psize; i++) {
+            for (int j = j0; j < Psize-1; j++) {
+                if(!get(i,j)) {
+                    P[i][j] = true;
+                    Pcurrentsize++;
+                    if (isValid(i, j)) {
+                        poliominos(i + 1, j, n - 1);
+                        poliominos(i, j + 1, n - 1);
+                    }
+                    P[i][j0] = false;
+                    Pcurrentsize--;
                 }
-                P[i][j] = false;
-                Pcurrentsize--;
+                poliominos(i+1, j, n - 1);
+                poliominos(i, j+1, n - 1);
+
+
             }
         }
         return false;
@@ -50,6 +60,6 @@ public class Poliominos {
     }
 
     public static void main(String[] args) {
-        System.out.println(poliominos( 4));
+        System.out.println(poliominos( 0,0,Psize));
     }
 }
