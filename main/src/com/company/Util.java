@@ -1,6 +1,8 @@
+package com.company;
+
 public class Util {
 
-    static void printMatrix(int[][] m){
+    public static void printMatrix(int[][] m){
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[i].length; j++) {
                 if(m[i][j] == Integer.MIN_VALUE){
@@ -16,7 +18,7 @@ public class Util {
         System.out.println("----");
     }
 
-    static void printMatrix(double[][] m){
+    public static void printMatrix(double[][] m){
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[i].length; j++) {
                 if(m[i][j] == Double.NEGATIVE_INFINITY){
@@ -32,7 +34,17 @@ public class Util {
         System.out.println("----");
     }
 
-    static void printArray(int[] a){
+    public static void printMatrix(boolean[][] m){
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[i].length; j++) {
+                System.out.printf(m[i][j] ? "W " : "· ");
+            }
+            System.out.println();
+        }
+        System.out.println("----");
+    }
+
+    public  static void printArray(int[] a){
         for (int i = 0; i < a.length; i++) {
             if(a[i] == Integer.MIN_VALUE){
                 System.out.printf("  -");
@@ -45,7 +57,7 @@ public class Util {
         System.out.println();
     }
 
-    static void printArray(double[] a){
+    public static void printArray(double[] a){
         for (int i = 0; i < a.length; i++) {
             if(a[i] == Double.NEGATIVE_INFINITY){
                 System.out.print("     -");
@@ -59,7 +71,7 @@ public class Util {
         System.out.println("----");
     }
 
-    static int maxDigits(int[] a){
+    public static int maxDigits(int[] a){
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < a.length; i++) {

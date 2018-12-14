@@ -1,3 +1,5 @@
+package com.company;
+
 public class CaminoKAristas {
 
     static double minKEdgesDynamic(int[][] G, int T, int V, int K){

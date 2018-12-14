@@ -1,3 +1,5 @@
+package com.company;
+
 public class Knapsack {
 
     static int unbounded(int[] values, int[] weights, int weight){

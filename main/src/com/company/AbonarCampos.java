@@ -1,3 +1,5 @@
+package com.company;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -21,7 +23,7 @@ public class AbonarCampos {
 //                    }
 //                }
 //                K[m][n] = max;
-//                Util.printMatrix(K);
+//                com.company.Util.printMatrix(K);
 //            }
 //        }
 
@@ -70,7 +72,7 @@ public class AbonarCampos {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("AbonarCampos"));
+        Scanner sc = new Scanner(new File("com.company.AbonarCampos"));
 
         int C = sc.nextInt();
         int M = sc.nextInt();

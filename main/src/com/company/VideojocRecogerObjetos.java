@@ -1,3 +1,5 @@
+package com.company;
+
 public class VideojocRecogerObjetos {
 
     static int minObjects(int[] p, int v){

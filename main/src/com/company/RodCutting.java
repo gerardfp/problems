@@ -1,3 +1,5 @@
+package com.company;
+
 public class RodCutting{
 
     static int cutRod(int[] prices, int size){

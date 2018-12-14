@@ -1,3 +1,5 @@
+package com.company;
+
 public class LCS {
 
     static int lcsDynamic(String M, String N){

@@ -1,3 +1,5 @@
+package com.company;
+
 public class AsignacionRecursos {
 
     static int maxBeneficio(int[][] v, int[] lm, int[] li, int R){

@@ -1,3 +1,5 @@
+package com.company;
+
 public class AldeasRiu {
 
     static int minCost(int[][] c){

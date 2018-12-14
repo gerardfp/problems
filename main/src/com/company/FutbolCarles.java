@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -109,7 +111,7 @@ public class FutbolCarles {
           val[i][j] = noEntra;
         }
 
-        //Util.printMatrix(val);
+        //com.company.Util.printMatrix(val);
       }
 
     }

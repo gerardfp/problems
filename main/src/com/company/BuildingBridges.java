@@ -1,3 +1,5 @@
+package com.company;
+
 public class BuildingBridges {
 
     /* https://www.geeksforgeeks.org/dynamic-programming-building-bridges/

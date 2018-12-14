@@ -1,3 +1,5 @@
+package com.company;
+
 public class VideojocEscalonsTorre {
 
     static int minCost(int[] p, int[] s){
