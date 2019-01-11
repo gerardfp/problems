@@ -5,12 +5,14 @@ import com.company.Util;
 public class NReinas {
 
     static boolean[][] T = new boolean[8][8];
+    static int numsols = 0;
 
     static boolean reinas(int j, int n){
         if(n==0){
             Util.printMatrix(T);
+            numsols++;
         }
-        if(j>=T.length) return false;
+        if(j >= T.length) return false;
 
 
         for (int i = 0; i < T.length; i++) {
@@ -44,6 +46,7 @@ public class NReinas {
 
     public static void main(String[] args) {
         System.out.println(reinas(0,8));
+        System.out.println(numsols);
     }
 }
 

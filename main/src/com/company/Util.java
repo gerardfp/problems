@@ -44,6 +44,17 @@ public class Util {
         System.out.println("----");
     }
 
+    public static void printMatrix(char[][] m){
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[i].length; j++) {
+                System.out.printf(m[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("----");
+    }
+
+
     public  static void printArray(int[] a){
         for (int i = 0; i < a.length; i++) {
             if(a[i] == Integer.MIN_VALUE){
