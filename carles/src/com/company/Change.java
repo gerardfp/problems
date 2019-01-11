@@ -1,6 +1,5 @@
 package com.company;
 
-import com.sun.jdi.IncompatibleThreadStateException;
 
 public class Change {
   public static void main(String[] args) {
