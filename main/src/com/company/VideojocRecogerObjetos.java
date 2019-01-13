@@ -12,14 +12,25 @@ public class VideojocRecogerObjetos {
             }
             K[i] = min;
         }
-        Util.printArray(K);
         return K[v];
     }
 
-    public static void main(String[] args) {
-        int[] p = {1,3,4,6};
+    static double minObjectsRecursiu(int[] p, int v0, int v){
+        if (v0 == v) return 0;
+        if (v0 > v) return Double.POSITIVE_INFINITY;
 
-        System.out.println(minObjects(p, 12));
+        double min = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < p.length; i++) {
+            min = Math.min(min, minObjectsRecursiu(p, p[i]+v0, v) + 1);
+        }
+        return min;
+    }
+
+    public static void main(String[] args) {
+        int[] p = {1,3,4,7,8, 20};
+
+        System.out.println(minObjects(p, 23));
+        System.out.println(minObjectsRecursiu(p, 0, 23));
     }
 }
 

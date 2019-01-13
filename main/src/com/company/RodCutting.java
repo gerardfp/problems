@@ -17,8 +17,7 @@ public class RodCutting{
 
     static int cutRodRecursiu(int[] prices, int size){
         if (size <= 0) return 0;
-
-
+        
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < prices.length; i++) {
             if(size-i-1 >= 0) {

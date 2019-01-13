@@ -2,10 +2,10 @@ package com.company;
 
 public class Knapsack {
 
-    static int unbounded(int[] values, int[] weights, int weight){
-        int[] K = new int[weight+1];
+    static int unbounded(int[] values, int[] weights, int W){
+        int[] K = new int[W +1];
 
-        for (int i = 1; i <= weight; i++) {
+        for (int i = 1; i <= W; i++) {
             int maxvalue = Integer.MIN_VALUE; // TODO: ¿ 0 ?
 
             for (int j = 0; j < values.length && j<i; j++) {  // TODO: ¿ j<i ?
@@ -16,7 +16,7 @@ public class Knapsack {
             K[i] = maxvalue;
         }
 
-        return K[weight];
+        return K[W];
     }
 
     static int zeroone(int[] val, int[] wt, int W) {

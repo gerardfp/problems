@@ -17,15 +17,28 @@ public class AldeasRiu {
         return K[c.length-1];
     }
 
+    static double minCostRecursiu(int[][] c, int a){
+        if(a >= c.length-1) return 0;
+
+        double min = Double.POSITIVE_INFINITY;
+        for (int i = a+1; i < c.length; i++) {
+            min = Math.min(min, minCostRecursiu(c, i) + c[a][i]);
+        }
+
+        return min;
+    }
+
     public static void main(String[] args) {
         int[][] costes = {
-                {0, 5, 8, 13},
-                {0, 0, 4, 5},
-                {0, 0, 0, 3},
-                {0, 0, 0, 0}
+                {0, 5, 8, 13, 18},
+                {0, 0, 4, 5, 19},
+                {0, 0, 0, 3, 7},
+                {0, 0, 0, 0, 3},
+                {0, 0, 0, 0, 0}
         };
 
         System.out.println(minCost(costes));
+        System.out.println(minCostRecursiu(costes, 0));
     }
 }
 
