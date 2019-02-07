@@ -15,14 +15,14 @@ public class ProfesorMusica {
         }
     }
 
-    static int[][] rs;     // all roads, adjacencia
-    static int[] towns;    // asigned towns
+    static int[][] rs;  // all roads, adjacencia
+    static int[] as;    // asigned as
 
     public static void main(String[] args) {
 
 
         while(sc.hasNextInt()){
-            int nt = sc.nextInt(); // num of towns
+            int nt = sc.nextInt(); // num of as
             int nr = sc.nextInt(); // num of roads
 
             rs = new int[nt][nt];
@@ -32,7 +32,7 @@ public class ProfesorMusica {
                 int dt = sc.nextInt();
                 int km = sc.nextInt();
                 if(st != dt) {
-                    if(rs[st-1][dt-1] ==0 || rs[st-1][dt-1] > km) {
+                    if(rs[st-1][dt-1] == 0 || rs[st-1][dt-1] > km) {
                         rs[st - 1][dt - 1] = km;
                         rs[dt - 1][st - 1] = km;
                     }
@@ -41,11 +41,11 @@ public class ProfesorMusica {
 
             int c = sc.nextInt();       // cursos
             for (int i = 0; i < c; i++) {
-                int at = sc.nextInt();  // assigned towns
-                towns = new int[at];
+                int at = sc.nextInt();  // assigned as
+                as = new int[at];
 
                 for (int j = 0; j < at; j++) {
-                    towns[j] = sc.nextInt();
+                    as[j] = sc.nextInt();
                 }
 
                 optimiza();
@@ -54,9 +54,16 @@ public class ProfesorMusica {
     }
 
     static void optimiza(){
-        // tengo un monton de roads y unos towns asignados
-        // devolver: donde mudarse   <= no puede estar en towns
-        //           minimo kms para visitar towns
+        // input: tengo un monton de carreteras "rs" y unos pueblos asignados "as" que hay que visitar
+        // problem: minima ruta que visite todos los asignados, emepezando y acabando en un pueblo que no asignado
+        // devolver: donde empieza y kilometros totales minimos
+
+        // primer calcular el minim tsp començant per cada un dels asignats, i guardarlos
+        // calcular els shortestPath entre els assignats, i despés aplicar el TSP a ixos shortestPath
+
+
+        // despres provar desde cada poble, el shortestPath a cada un dels asignat i sumarli el minim tsp desde ixe poble
+        // Fer poda.
 
         Util.printMatrix(rs);
 
