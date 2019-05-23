@@ -15,9 +15,11 @@ public class CaminoMasCortoSinCiclosNegativos {
         for (int k = 1; k < G.length; k++) {
             for (int i = 0; i < G.length; i++) {
                 for (int j = 0; j < G.length; j++) {
+                    System.out.print("PASADA " + k +","+i+","+j+ ":   ");
                     if (G[i][j] != 0 && dist[i] != Double.POSITIVE_INFINITY && dist[i] + G[i][j] < dist[j]) {
                         dist[j] = dist[i] + G[i][j];
                     }
+                    Util.printArray(dist);
                 }
             }
         }
@@ -80,14 +82,14 @@ public class CaminoMasCortoSinCiclosNegativos {
         G[4][3] = 2;
         G[4][5] = 2;
 
-
-        for (int i = 0; i < G.length; i++) {
-            for (int j = 0; j < G.length; j++) {
-                System.out.println("*** " + i + " -> " + j + " ***");
-                System.out.println("Bellmanford      " + bellmanFord(i, j));
-                System.out.println("BellmanfordPath  " + bellmanFordPath(i, j));
-                System.out.println();
-            }
-        }
+        System.out.println("Bellmanford      " + bellmanFord(0, 5));
+//        for (int i = 0; i < G.length; i++) {
+//            for (int j = 0; j < G.length; j++) {
+//                System.out.println("*** " + i + " -> " + j + " ***");
+//                System.out.println("Bellmanford      " + bellmanFord(i, j));
+//                System.out.println("BellmanfordPath  " + bellmanFordPath(i, j));
+//                System.out.println();
+//            }
+//        }
     }
 }

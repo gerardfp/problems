@@ -10,7 +10,7 @@ public class Util {
                 }else if(m[i][j] == Integer.MAX_VALUE){
                     System.out.printf("  +");
                 }else {
-                    System.out.printf("%3d", m[i][j]);
+                    System.out.printf("%3d, ", m[i][j]);
                 }
             }
             System.out.println();
