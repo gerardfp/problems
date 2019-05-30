@@ -3,21 +3,43 @@ package com.company;
 import java.util.Arrays;
 
 public class EconomicLotSize {
-    static int[] d = {3,4,2,1,3};   // demanda
+    static int[] d = {3,2,3};   // demanda
     static int[] max;
-    static int[] ca = {0,2,1,3,2};    // cost magatzem
-    static int[] cp = {4,5,4,3,5};  // cost produccio
+    static int[] ca = {1,4,1};    // cost magatzem
+    static int[] cp = {5,1,2};  // cost produccio
 
     public static void main(String[] args) {
 
-        max = new int[d.length];
-        max[d.length-1] = d[d.length-1];
-        for (int i = d.length-2; i >= 0; i--) {
-            max[i] = max[i+1] + d[i];
+//        max = new int[d.length];
+//        max[d.length-1] = d[d.length-1];
+//        for (int i = d.length-2; i >= 0; i--) {
+//            max[i] = max[i+1] + d[i];
+//        }
+//
+//        System.out.println(Arrays.toString(max));
+        System.out.println(optimize());
+    }
+
+    static double optimize(){
+        double[] prod = new double[d.length];
+
+        prod[0] = d[0]*cp[0];
+
+        for (int i = 1; i < d.length; i++) {
+            double min = Double.POSITIVE_INFINITY;
+
+            for (int j = 0; j <= i; j++) {
+                int c = d[i]*cp[j];
+                for (int k = j; k <i ; k++) {
+                    c += d[i]*ca[k];
+                }
+                min = Math.min(min, c);
+            }
+            prod[i] = min;
         }
 
-        System.out.println(Arrays.toString(max));
-        System.out.println(optimizeR(0, 0));
+        System.out.println(Arrays.toString(prod));
+        return d[d.length-1];
     }
 
     static double optimizeR(int n, int s){
