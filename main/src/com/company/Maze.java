@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
 
 
 public class Maze {
@@ -52,9 +50,51 @@ public class Maze {
 
     public static void main(String[] args) {
         solve(maze);
+        System.out.println("--------------------");
+        solve2(maze);
     }
 
     private static void solve(int[][] maze) {
+        LinkedList<Pos> posicions = new LinkedList<>();
+        boolean[][] visitats = new boolean[maze.length][maze[0].length];
+
+        int [][] opcions = {
+                {1, 0},
+                {0, 1},
+                {-1, 0},
+                {0, -1}
+        };
+
+        posicions.add(new Pos(0, 0));
+
+        Pos result = null;
+
+        while (!posicions.isEmpty()) {
+            Pos act = posicions.poll();
+            if (act.x==maze.length-1 && act.y == maze[0].length-1){
+                result = act;
+                break;
+            }
+            for (int[] opcio: opcions) {
+                Pos next = new Pos(act.x + opcio[0], act.y + opcio[1]);
+
+                if(esValida(next) && !visitats[next.x][next.y]) {
+                    next.ant = act;
+                    posicions.add(next);
+                }
+            }
+
+            visitats[act.x][act.y] = true;
+        }
+
+        Pos aux = result;
+        while (aux!=null) {
+            System.out.println(aux);
+            aux = aux.ant;
+        }
+    }
+
+    private static void solve2(int[][] maze) {
         ArrayDeque<Pos> posicions = new ArrayDeque<>();
         HashSet<Pos> visitats = new HashSet<>();
 
@@ -85,15 +125,11 @@ public class Maze {
             visitats.add(act);
         }
 
-        Pos aux;
-
-        aux = result;
-
+        Pos aux = result;
         while (aux!=null) {
             System.out.println(aux);
             aux = aux.ant;
         }
-
     }
 
     private static boolean esValida(Pos aux) {

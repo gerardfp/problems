@@ -6,12 +6,12 @@ public class Futbol {
     public static void main(String[] args) {
         double[][] P = new double[12][12];
         P[0][1] = 0.9;
-        P[0][2] = 0.7;
+        P[0][2] = 0.07;
         P[1][2] = 0.6;
         P[1][4] = 0.1;
 //        P[2][3] = 0.5;
         P[2][5] = 0.1;
-        P[2][11] = 0.2;
+        P[2][11] = 0.09;
         P[3][0] = 0.9;
         P[3][2] = 1;
         P[3][5] = 0.8;
@@ -35,8 +35,9 @@ public class Futbol {
 
         //System.out.println(optima(P));
 
-        //System.out.println(spfa(P));
-        System.out.println(bellmanFord(P));
+        System.out.println(spfa(P));
+        System.out.println(dijkstra(P));
+        System.out.println(bellmanFordSimple(P));
         System.out.println(floydWarshall(P));
 //        System.out.println("****PPPPPPPPPPP");
 //        System.out.println(bellmanFordPath(P));
@@ -46,106 +47,79 @@ public class Futbol {
 //        System.out.println(floydWarshallPath(P));
     }
 
-    static double spfa(double[][] p) {
-        // https://github.com/clarkchen/data_structure/blob/master/src/main/java/Graph/SPFA/SPFA.java
-        double[] val = new double[p.length];
-        int[] path = new int[p.length];
+    static int maxProb(double[] dist, boolean[] included) {
+        double max = Double.NEGATIVE_INFINITY;
+        int maxIndex = -1;
 
-        Queue<Integer> q =  new LinkedList<>();
-
-        val[0] = 1;
-        for (int j = 1; j < p.length; j++) {
-            val[j] = Double.NEGATIVE_INFINITY;
-        }
-
-        q.offer(0);
-        while (!q.isEmpty()) {
-            int act = q.poll();
-
-            for (int i = 1; i < p[act].length; i++) {
-                if (p[act][i] != 0) { // este if sobraria
-                    if (val[i] < p[act][i] * val[act]) {
-                        val[i] = p[act][i] * val[act];
-                        path[i] = act;
-                        if (!q.contains(i)) {
-                            q.offer(i);
-                        }
-                    }
-                }
+        for (int v = 0; v < dist.length; v++)
+            if (!included[v] && dist[v] >= max) {
+                max = dist[v];
+                maxIndex = v;
             }
+
+        return maxIndex;
+    }
+
+    static double dijkstra(double[][] G){
+        double[] dist = new double[G.length];
+        boolean[] included = new boolean[G.length];
+        int[] path = new int[G.length];
+
+        dist[0] = 1;
+
+        for (int i = 0; i < G.length-1; i++) {
+            int min = maxProb(dist, included);
+
+            if(min == -1) break;
+
+            included[min] = true;
+
+            for (int j = 0; j < G.length; j++)
+                if(!included[j] && G[min][j] != 0 && dist[min] != 0 && dist[min]*G[min][j] > dist[j]) {
+                    dist[j] = dist[min] * G[min][j];
+                    path[j] = min;
+                }
+
         }
 
-        int i = p.length-1;
-        while (i != 0) {
-            System.out.println("Al " + i + " li passa el " + path[i]);
-            i = path[i];
-        }
-
-        return val[p.length-1];
+        System.out.println(Arrays.toString(path));
+        return dist[G.length-1];
     }
 
 
-    static double bellmanFord(double[][] graph) {
-        /*https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/*/
-        double dist[] = new double[graph.length];
+
+    static double bellmanFordSimple(double[][] graph) {
+        /*https://www.geeksforgeeks.org/bellman-ford-algorithm-simple-implementation/*/
+        double[] dist = new double[graph.length];
+        int[] path = new int[graph.length];
 
         for (int i=0; i<graph.length; ++i)
             dist[i] = Double.NEGATIVE_INFINITY;
         dist[0] = 1;
 
-        for (int k = 1; k < graph.length; k++) {
-            for (int i=0; i<graph.length; ++i) {
-                for (int j=0; j<graph.length; ++j) {
-                    if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j]) {
-                        dist[j] = dist[i] * graph[i][j];
-                    }
+
+        for (int i=0; i<graph.length; ++i) {
+            for (int j=0; j<graph.length; ++j) {
+                if (graph[i][j] != 0 && dist[i] * graph[i][j] > dist[j]) {
+                    dist[j] = dist[i] * graph[i][j];
+                    path[j] = i;
                 }
             }
         }
 
         for (int i = 0; i < graph.length; i++) {
-            for (int j=0; j<graph.length; ++j) {
-                if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j])
+            for (int j=0; j<graph.length; j++) {
+                if (graph[i][j] != 0 && dist[i] * graph[i][j] > dist[j])
                     System.out.println("Graph contains negative weight cycle");
             }
         }
 
-        Util.printArray(dist);
+        System.out.println(Arrays.toString(path));
+//        int v = path[path.length-1];
+//        System.out.println(v);
+//        while((v = path[v]) != 0)
+//            System.out.println(v);
 
-        return dist[graph.length-1];
-    }
-
-    static double bellmanFordPath(double[][] graph) {
-        /*https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/*/
-
-        double dist[] = new double[graph.length];
-        int path2[] = new int[graph.length];
-
-        for (int i=0; i<graph.length; ++i)
-            dist[i] = Double.NEGATIVE_INFINITY;
-        dist[0] = 1;
-
-        for (int k = 1; k < graph.length; k++) {
-            for (int i=0; i<graph.length; ++i) {
-                for (int j=0; j<graph.length; ++j) {
-                    if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j]) {
-                        dist[j] = dist[i] * graph[i][j];
-                        path2[j] = i;
-
-                        Util.printArray(path2);
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < graph.length; i++) {
-            for (int j=0; j<graph.length; ++j) {
-                if (graph[i][j] != 0 && dist[i] != Double.NEGATIVE_INFINITY && dist[i] * graph[i][j] > dist[j])
-                    System.out.println("Graph contains negative weight cycle");
-            }
-        }
-
-        Util.printArray(path2);
         return dist[graph.length-1];
     }
 
@@ -171,7 +145,7 @@ public class Futbol {
             }
         }
 
-        Util.printMatrix(dist);
+//        Util.printMatrix(dist);
 
         return dist[0][graph.length-1];
     }
@@ -217,6 +191,44 @@ public class Futbol {
         }
 
         return dist[0][graph.length-1];
+    }
+
+    static double spfa(double[][] p) {
+        // https://github.com/clarkchen/data_structure/blob/master/src/main/java/Graph/SPFA/SPFA.java
+        double[] val = new double[p.length];
+        int[] path = new int[p.length];
+
+        Queue<Integer> q =  new LinkedList<>();
+
+        val[0] = 1;
+        for (int j = 1; j < p.length; j++) {
+            val[j] = Double.NEGATIVE_INFINITY;
+        }
+
+        q.offer(0);
+        while (!q.isEmpty()) {
+            int act = q.poll();
+
+            for (int i = 1; i < p[act].length; i++) {
+                if (p[act][i] != 0) { // este if sobraria
+                    if (val[i] < p[act][i] * val[act]) {
+                        val[i] = p[act][i] * val[act];
+                        path[i] = act;
+                        if (!q.contains(i)) {
+                            q.offer(i);
+                        }
+                    }
+                }
+            }
+        }
+
+        int i = p.length-1;
+        while (i != 0) {
+            System.out.println("Al " + i + " li passa el " + path[i]);
+            i = path[i];
+        }
+
+        return val[p.length-1];
     }
 }
 

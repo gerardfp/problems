@@ -5,25 +5,26 @@ public class CaminoKAristas {
     static int[][] G;
 
     static double minKEdgesDynamic(int S, int T, int K){
-        double[][] D = new double[G.length][K+1];
+        double[][] DP = new double[K+1][G.length];
 
-        for (int k = 0; k <= K; k++) {
-            for (int s = 0; s < G.length; s++) {
-                if (s==T && k==0) D[s][k] = 0;
-                else if (s!=T && k==0) D[s][k] = Double.POSITIVE_INFINITY;
-                else {
-                    double min = Double.POSITIVE_INFINITY;
-                    for (int i = 0; i < G.length; i++) {
-                        if (G[s][i] != 0 && k - 1 >= 0) {
-                            min = Math.min(min, D[i][k-1] + G[s][i]);
-                        }
+        for (int i = 0; i < G.length; i++) {
+            if(i != S)
+                DP[0][i] = Double.POSITIVE_INFINITY;
+        }
+
+        for (int i = 1; i < K+1; i++) {
+            for (int j = 0; j < G.length; j++) {
+                double min = Double.POSITIVE_INFINITY;
+                for (int k = 0; k < G.length; k++) {
+                    if(G[k][j] != 0) {
+                        min = Math.min(min, DP[i-1][k]+G[k][j]);
                     }
-                    D[s][k] = min;
                 }
+                DP[i][j] = min;
             }
         }
 
-        return D[S][K];
+        return DP[K][T];
     }
 
     static double minKEdgesRecursiu(int S, int T, int K){

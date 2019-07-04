@@ -1,4 +1,6 @@
-package com.company;
+package com.company.backtracking;
+
+import com.company.Utils;
 
 public class KnightsTour {
 
