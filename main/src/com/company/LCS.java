@@ -1,6 +1,45 @@
 package com.company;
 
+import java.util.Arrays;
+
 public class LCS {
+
+    static char[] lcsDynamicPath(String M, String N){
+        char[] a = M.toCharArray();
+        char[] b = N.toCharArray();
+        int[][] K = new int[a.length+1][b.length+1];
+
+        for (int i = 1; i <=a.length ; i++) {
+            for (int j = 1; j <= b.length ; j++) {
+                if(a[i-1] == b[j-1]){
+                    K[i][j] = K[i-1][j-1]+1;
+                }else{
+                    K[i][j] = Math.max(K[i][j-1], K[i-1][j]);
+                }
+            }
+        }
+
+        // path
+        int i=a.length;
+        int j=b.length;
+        int n = K[a.length][b.length];
+        char[] lcs = new char[n];
+
+        while(i != 0 && j != 0){
+            if(a[i-1] == b[j-1]){
+                lcs[--n] = a[i-1];
+                j--;
+                i--;
+            }else{
+                if(K[i-1][j] > K[i][j-1]){
+                    i--;
+                }else{
+                    j--;
+                }
+            }
+        }
+        return lcs;
+    }
 
     static int lcsDynamic(String M, String N){
         int[][] K = new int[M.length()+1][N.length()+1];
@@ -56,6 +95,7 @@ public class LCS {
         String N = "azbcvd";
         System.out.println(lcsDynamic(M, N));
         System.out.println(lcsRecursiu(M, N, M.length(), N.length()));
+        System.out.println(Arrays.toString(lcsDynamicPath(M,N)));
 //        System.out.println(lcsRecursiuLog(M, N, M.length(), N.length(), 1));
     }
 }
