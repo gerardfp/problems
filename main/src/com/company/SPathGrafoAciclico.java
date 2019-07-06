@@ -25,7 +25,7 @@ public class SPathGrafoAciclico {
 //                double r = shortestR(i, j);
 //                if(r != d){
 //                    System.out.println();
-//                    System.out.println("s,t = " + i + ","+j);
+//                    System.out.println("s,tarta = " + i + ","+j);
 //                    System.out.println("D: " + d);
 //                    System.out.println("R: " + r);
 //                }

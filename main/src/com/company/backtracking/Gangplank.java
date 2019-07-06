@@ -1,4 +1,4 @@
-package com.company.misc;
+package com.company.backtracking;
 
 import java.util.Scanner;
 
@@ -42,9 +42,9 @@ public class Gangplank {
             if(size*factors[i] <= 1) return true;
         }
 
-        boolean ganoyo = false;
+        boolean ganoyo = true;
         for (int i = 0; i < factors.length; i++) {
-            ganoyo = ganoyo || !ganoYo(size*factors[i]);
+            ganoyo = ganoyo && !ganoYo(size*factors[i]);
         }
 
         return ganoyo;

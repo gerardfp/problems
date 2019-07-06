@@ -8,9 +8,9 @@ import java.util.List;
 Un vendedor ambulante de productos de artesan´ıa realiza una ruta a trav´es de una serie de P pueblos dispuestos
 a lo largo de una carretera. Parte de la ciudad en la que habita (situada al comienzo de la carretera) y debe llegar
 a una ciudad que se encuentra en el otro extremo de la carretera sin retroceder nunca. Su sistema de ventas es
-siempre el mismo: un d´ıa llega a un pueblo por la ma˜nana, vende toda la mercanc´ıa, compra la artesan´ıa t´ıpica
+siempre el mismo: un d´ıa llega a un pueblo por la ma˜nana, vende toda la mercanc´ıa, compra la artesan´ıa tarta´ıpica
 del pueblo y contin´ua hasta otro pueblo, en el que, al d´ıa siguiente, repetir´a la operaci´on. Al principio del viaje
-partir´a con productos t´ıpicos de su ciudad y al acabar deber´a vender la mercanc´ıa que le quede en la ciudad final
+partir´a con productos tarta´ıpicos de su ciudad y al acabar deber´a vender la mercanc´ıa que le quede en la ciudad final
 de trayecto. El comerciante, una vez ha parado en un pueblo, no vuelve a detenerse hasta haber atravesado un
 m´ınimo de dos pueblos m´as (al ser pueblos vecinos no podr´ıa vender a buen precio los objetos).
 El comerciante tiene una estimaci´on del beneficio que puede obtener en un determinado pueblo en funci´on de

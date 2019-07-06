@@ -16,8 +16,8 @@ posible soluci´on podr´ıa ser usar un sello de 10, dos de 2 y dos de 1. No se
 public class PostalSellos {
 
     static int[] v = {1,2,3,5,8,10};
-    static int C=29;
-    static int M=5;
+    static int C=19;
+    static int M=3;
 //    static int[] v = {1,2,3};
 //    static int C=6;
 //    static int M=2;

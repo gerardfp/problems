@@ -7,33 +7,16 @@ public class Maze {
     static class Pos {
         int x;
         int y;
-        public Pos ant;
+        Pos ant;
 
-        public Pos(int x, int y) {
+        Pos(int x, int y) {
             this.x = x;
             this.y = y;
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Pos pos = (Pos) o;
-            return x == pos.x &&
-                    y == pos.y;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(x, y);
-        }
-
-        @Override
         public String toString() {
-            return "Pos{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
+            return "Pos{x=" + x + ", y=" + y + '}';
         }
     }
 
@@ -50,8 +33,6 @@ public class Maze {
 
     public static void main(String[] args) {
         solve(maze);
-        System.out.println("--------------------");
-        solve2(maze);
     }
 
     private static void solve(int[][] maze) {
@@ -67,12 +48,11 @@ public class Maze {
 
         posicions.add(new Pos(0, 0));
 
-        Pos result = null;
+        Pos act = null;
 
         while (!posicions.isEmpty()) {
-            Pos act = posicions.poll();
+            act = posicions.poll();
             if (act.x==maze.length-1 && act.y == maze[0].length-1){
-                result = act;
                 break;
             }
             for (int[] opcio: opcions) {
@@ -87,49 +67,10 @@ public class Maze {
             visitats[act.x][act.y] = true;
         }
 
-        Pos aux = result;
-        while (aux!=null) {
+        Pos aux = act;
+        System.out.println(aux);
+        while ((aux = aux.ant) != null)
             System.out.println(aux);
-            aux = aux.ant;
-        }
-    }
-
-    private static void solve2(int[][] maze) {
-        ArrayDeque<Pos> posicions = new ArrayDeque<>();
-        HashSet<Pos> visitats = new HashSet<>();
-
-        int [][] opcions = {
-                {1, 0},
-                {0, 1},
-                {-1, 0},
-                {0, -1}
-        };
-
-        posicions.push(new Pos(0, 0));
-
-        Pos result = null;
-
-        while (!posicions.isEmpty()) {
-            Pos act = posicions.pop();
-            if (act.x==maze.length-1 && act.y == maze[0].length-1)
-                result = act;
-            for (int[] opcio: opcions) {
-                Pos aux = new Pos(act.x + opcio[0], act.y + opcio[1]);
-
-                if(esValida(aux) && !visitats.contains(aux)) {
-                    aux.ant = act;
-                    posicions.offer(aux);
-                }
-            }
-
-            visitats.add(act);
-        }
-
-        Pos aux = result;
-        while (aux!=null) {
-            System.out.println(aux);
-            aux = aux.ant;
-        }
     }
 
     private static boolean esValida(Pos aux) {

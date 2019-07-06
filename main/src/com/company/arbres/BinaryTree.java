@@ -1,16 +1,18 @@
 package com.company.arbres;
 
-class Node {
-    int value;
-    Node left;
-    Node right;
 
-    public Node(int value) {
-        this.value = value;
-    }
-}
 
 public class BinaryTree {
+    static class Node {
+        int value;
+        Node left;
+        Node right;
+
+        public Node(int value) {
+            this.value = value;
+        }
+    }
+
     public static void main(String[] args) {
         Node tree = null;
 

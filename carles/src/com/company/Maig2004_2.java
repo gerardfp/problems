@@ -1,6 +1,5 @@
 package com.company;
 
-import static com.sun.tools.doclint.Entity.sup;
 
 public class Maig2004_2 {
   private final int[][] d;
