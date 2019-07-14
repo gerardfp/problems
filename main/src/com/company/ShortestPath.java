@@ -1,89 +1,25 @@
 package com.company;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class Futbol {
+public class ShortestPath {
     public static void main(String[] args) {
-        double[][] P = new double[12][12];
-        P[0][1] = 0.9;
-        P[0][2] = 0.07;
-        P[1][2] = 0.6;
-        P[1][4] = 0.1;
-//        P[2][3] = 0.5;
-        P[2][5] = 0.1;
-        P[2][11] = 0.09;
-        P[3][0] = 0.9;
-        P[3][2] = 1;
-        P[3][5] = 0.8;
-        P[4][11] = 0.7;
-        P[5][4] = 0.3;
-        P[5][11] = 0.6;
+        double[][] P = new double[4][4];
 
-//        double[][] P = new double[5][5];
-//        P[0][3] = 1;
-//        P[1][4] = 1;
-//        P[2][1] = 1;
-//        P[3][2] = 1;
-
-        double[][] P2 = {
-                { 0,  0,  0,  1,  0},
-                { 0,  0,  0,  0,  1},
-                { 0,  1,  0,  0,  0},
-                { 0,  0,  1,  0,  0},
-                {0,0,0,0,0}
-        };
-
+        P[0][1] = 20;
+        P[0][2] = 1;
+        P[1][3] = 20;
+        P[1][0] = 1;
+        P[2][1] = -500;
+        P[2][3] = 1;
         //System.out.println(optima(P));
 
-        System.out.println(spfa(P));
-        System.out.println(dijkstra(P));
+//        System.out.println(spfa(P));
         System.out.println(bellmanFordSimple(P));
-        System.out.println(floydWarshall(P));
-//        System.out.println("****PPPPPPPPPPP");
-//        System.out.println(bellmanFordPath(P));
-//        System.out.println();
-//        System.out.println("****P22222222222");
-//        System.out.println(bellmanFordPath(P2));
-//        System.out.println(floydWarshallPath(P));
-    }
-
-    static int maxProb(double[] dist, boolean[] included) {
-        double max = Double.NEGATIVE_INFINITY;
-        int maxIndex = -1;
-
-        for (int v = 0; v < dist.length; v++)
-            if (!included[v] && dist[v] >= max) {
-                max = dist[v];
-                maxIndex = v;
-            }
-
-        return maxIndex;
-    }
-
-    static double dijkstra(double[][] G){
-        double[] dist = new double[G.length];
-        boolean[] included = new boolean[G.length];
-        int[] path = new int[G.length];
-
-        dist[0] = 1;
-
-        for (int i = 0; i < G.length-1; i++) {
-            int min = maxProb(dist, included);
-
-            if(min == -1) break;
-
-            included[min] = true;
-
-            for (int j = 0; j < G.length; j++)
-                if(!included[j] && G[min][j] != 0 && dist[min] != 0 && dist[min]*G[min][j] > dist[j]) {
-                    dist[j] = dist[min] * G[min][j];
-                    path[j] = min;
-                }
-
-        }
-
-        System.out.println(Arrays.toString(path));
-        return dist[G.length-1];
+//        System.out.println(floydWarshall(P));
     }
 
 
@@ -94,14 +30,15 @@ public class Futbol {
         int[] path = new int[graph.length];
 
         for (int i=0; i<graph.length; ++i)
-            dist[i] = Double.NEGATIVE_INFINITY;
-        dist[0] = 1;
+            dist[i] = Double.POSITIVE_INFINITY;
+        dist[0] = 0;
 
-        for (int k = 0; k < graph.length-1; k++) {
-            for (int i=0; i<graph.length; ++i) {
-                for (int j=0; j<graph.length; ++j) {
-                    if (graph[i][j] != 0 && dist[i] * graph[i][j] > dist[j]) {
-                        dist[j] = dist[i] * graph[i][j];
+
+        for (int k = 0; k < graph.length; k++) {
+            for (int i = 0; i < graph.length; ++i) {
+                for (int j = 0; j < graph.length; ++j) {
+                    if (graph[i][j] != 0 && dist[i] + graph[i][j] < dist[j]) {
+                        dist[j] = dist[i] + graph[i][j];
                         path[j] = i;
                     }
                 }
@@ -110,16 +47,16 @@ public class Futbol {
 
         for (int i = 0; i < graph.length; i++) {
             for (int j=0; j<graph.length; j++) {
-                if (graph[i][j] != 0 && dist[i] * graph[i][j] > dist[j])
+                if (graph[i][j] != 0 && dist[i] + graph[i][j] < dist[j])
                     System.out.println("Graph contains negative weight cycle");
             }
         }
 
         System.out.println(Arrays.toString(path));
-//        int v = path[path.length-1];
-//        System.out.println(v);
-//        while((v = path[v]) != 0)
-//            System.out.println(v);
+        int v = path[path.length-1];
+        System.out.println(v);
+        while((v = path[v]) != 0)
+            System.out.println(v);
 
         return dist[graph.length-1];
     }
@@ -138,8 +75,8 @@ public class Futbol {
                     if (i != k && j != k && i != j) {
                         //Per a anar de i->j  mirem si es millor anar de i->k i de k->j
                         //System.out.println("i=" + i + "  k=" + k + "  j=" + j);
-                        if (dist[i][k] * dist[k][j] > dist[i][j]) {
-                            dist[i][j] = dist[i][k] * dist[k][j];
+                        if (dist[i][k] + dist[k][j] < dist[i][j]) {
+                            dist[i][j] = dist[i][k] + dist[k][j];
                         }
                     }
                 }
@@ -201,9 +138,9 @@ public class Futbol {
 
         Queue<Integer> q =  new LinkedList<>();
 
-        val[0] = 1;
+        val[0] = 0;
         for (int j = 1; j < p.length; j++) {
-            val[j] = Double.NEGATIVE_INFINITY;
+            val[j] = Double.POSITIVE_INFINITY;
         }
 
         q.offer(0);
@@ -212,8 +149,8 @@ public class Futbol {
 
             for (int i = 1; i < p[act].length; i++) {
                 if (p[act][i] != 0) { // este if sobraria
-                    if (val[i] < p[act][i] * val[act]) {
-                        val[i] = p[act][i] * val[act];
+                    if (val[i] > p[act][i] + val[act]) {
+                        val[i] = p[act][i] + val[act];
                         path[i] = act;
                         if (!q.contains(i)) {
                             q.offer(i);
@@ -223,11 +160,11 @@ public class Futbol {
             }
         }
 
-        int i = p.length-1;
-        while (i != 0) {
-            System.out.println("Al " + i + " li passa el " + path[i]);
-            i = path[i];
-        }
+//        int i = p.length-1;
+//        while (i != 0) {
+//            System.out.println("Al " + i + " li passa el " + path[i]);
+//            i = path[i];
+//        }
 
         return val[p.length-1];
     }

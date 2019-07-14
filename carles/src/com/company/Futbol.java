@@ -69,12 +69,13 @@ public class Futbol {
     negatius[1][3] = 2;
     negatius[2][1] = -300;
 
+    graf.dijkstra(P);
 
     /*graf.wtf(P);
     System.out.println();
     graf.bellmanFord(P);
     System.out.println();
-    graf.dijkstra(P);
+//    graf.dijkstra(P);
 
     graf.wtf(negatius);
     System.out.println();
@@ -82,7 +83,7 @@ public class Futbol {
     System.out.println();
     graf.dijkstra(negatius);*/
 
-    System.out.println(graf.bellmanFordProb(distancies));
+//    System.out.println(graf.bellmanFordProb(distancies));
   }
 
   private double maximitzaIter() {
@@ -303,12 +304,19 @@ public class Futbol {
       double value = Double.POSITIVE_INFINITY;
       int act = -1;
 
-      for (int i = 0; i < p.length; i++) {
-        if (pen.contains(i) && val[i] <= value) {
+      for(Integer i:pen){
+        if(val[i] <= value){
           value = val[i];
           act = i;
         }
       }
+
+//      for (int i = 0; i < p.length; i++) {
+//        if (pen.contains(i) && val[i] <= value) {
+//          value = val[i];
+//          act = i;
+//        }
+//      }
 
       pen.remove(act);
 

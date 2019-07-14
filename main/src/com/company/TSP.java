@@ -26,7 +26,6 @@ public class TSP {
                     rutaMin.add(0);
                 }
                 costAct -= graph[ini][0];
-
             }
         } else {
             for (int i = 0; i < graph.length; i++) {

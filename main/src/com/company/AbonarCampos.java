@@ -3,6 +3,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/*
+ * Se quiere abonar C campos con M metros cúbicos de agua y N sacos de abono. La utilización
+ * de m metros de agua y n sacos de abono en el campo c permite obtener una cosecha cuyo valor
+ * es v(c,m,n). ¿Cuantos sacos y metros hay que invertir en cada campo para obtener una cosecha
+ * de valor máximo?
+ */
+
 public class AbonarCampos {
 
     static int maxValorDynamic(int C, int M, int N){
@@ -103,9 +110,3 @@ public class AbonarCampos {
     }
 }
 
-/*
- * Se quiere abonar C campos con M metros cúbicos de agua y N sacos de abono. La utilización
- * de m metros de agua y n sacos de abono en el campo c permite obtener una cosecha cuyo valor
- * es v(c,m,n). ¿Cuantos sacos y metros hay que invertir en cada campo para obtener una cosecha
- * de valor máximo?
- */
