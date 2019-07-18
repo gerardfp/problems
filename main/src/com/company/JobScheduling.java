@@ -1,6 +1,11 @@
 package com.company;
 
+import java.util.PriorityQueue;
 import java.util.Random;
+
+class Graph {
+
+}
 
 public class JobScheduling {
     static int[][] jobs = {
@@ -21,6 +26,40 @@ public class JobScheduling {
             if(jobs[i][0] >= fi)
                 max = Math.max(max, recursiu(jobs[i][1], jobs) + jobs[i][2]);
         return max;
+    }
+
+    static int dijkstra(int[][] jobs){
+        boolean[] used = new boolean[jobs.length];
+        double[] benefici = new double[jobs.length];
+        PriorityQueue<int[]> pq = new PriorityQueue<>();
+
+        for (int i = 1; i < jobs.length; i++) {
+            benefici[i] = Double.NEGATIVE_INFINITY;
+        }
+
+        pq.offer(new int[]{0,jobs[0][2]});
+
+        benefici[0] = jobs[0][2];
+
+        while(pq.isEmpty()){
+            int[] ext = pq.poll();
+
+            int u = ext[0];
+            int b = ext[1];
+
+            if(!used[u]){
+                used[u] = true;
+
+                for (int i = 0; i < benefici.length; i++) {
+//                    if(benefici[i] < benefici[u] + ){
+//
+//                    }
+                }
+            }
+
+        }
+
+        return 0;
     }
 
     static void fake(){

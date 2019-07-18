@@ -7,7 +7,6 @@ public class Levenshtein {
     static int levenshtein(String word1, String word2){
         int[][] D = new int[word1.length()+1][word2.length()+1];
 
-
         for (int i = 1; i <= word1.length(); i++) {
             D[i][0] = i;
         }
@@ -50,6 +49,7 @@ public class Levenshtein {
 
     public static void main(String[] args) {
 //        System.out.println(levenshtein("zoologicoarchaeologist", "zoogeologist"));
+        System.out.println(levenshtein("hooa", "oola"));
     }
 }
 

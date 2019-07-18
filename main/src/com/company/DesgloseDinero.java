@@ -6,8 +6,8 @@ import java.util.List;
 
 public class DesgloseDinero {
 
-    static int[] monedes = {1,2,5,10,20, 50};
-    static int N = 9;
+    static int[] monedes = {3,5};
+    static int N = 6;
 
     public static void main(String[] args) {
         List<Integer> desglose = minimMonedes(monedes, N);
